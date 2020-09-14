@@ -12,25 +12,97 @@ struct HomeView: View {
     
     @StateObject var vm = HomeViewModel()
     @AppStorage("current_user") var user = ""
+    @State private var  scrolled = false
     
     var body: some View {
         
-        VStack {
-            ScrollView {
-                ForEach(vm.messages) { message in
-                    Text(message.msg)
+        VStack(spacing : 0) {
+            
+            /// navbar
+            
+            HStack {
+                Text("Chat")
+                    .font(.title)
+                    .fontWeight(.heavy)
+                    .foregroundColor(.white)
+                
+                Spacer(minLength: 0)
+            }
+            .padding()
+            .padding(.top, UIApplication.shared.windows.first?.safeAreaInsets.top)
+            .background(Color(.green))
+            
+            
+            
+            ScrollViewReader { reader in
+                
+                ScrollView {
+                    
+                    VStack(spacing : 15) {
+                        ForEach(vm.messages) { message in
+                            ChatCell(message: message)
+                                .onAppear {
+                                    /// scroll Bottom when FirstLoad
+                                    
+                                    
+                                    if message.id == self.vm.messages.last!.id && !scrolled {
+                                        reader.scrollTo(vm.messages.last!.id, anchor : .bottom)
+                                        
+                                        scrolled = true
+
+                                    }
+                                }
+                        }
+                        .onChange(of: vm.messages) { (value) in
+                            /// scroll to bottom get New Chat
+                            reader.scrollTo(vm.messages.last!.id, anchor : .bottom)
+                        }
+                    }
+                    .padding(.vertical)
+                    
+                    
+                    
                 }
             }
+            
+            /// Text Field
+            
+            HStack(spacing : 15) {
+                
+                TextField("Enter Message", text: $vm.text)
+                    .padding(.horizontal)
+                    .frame( height: 45)
+                    .background(Color.primary.opacity(0.06))
+                    .clipShape(Capsule())
+                
+                if vm.text != "" {
+                    Button(action: {vm.sendMessage()}) {
+                        Image(systemName: "paperplane.fill")
+                            .font(.system(size: 22))
+                            .foregroundColor(.white)
+                            .frame(width: 45, height: 45)
+                            .background(Color.green)
+                            .clipShape(Circle())
+                    }
+                }
+            }
+            .padding(.bottom, 5)
+            
+            
+            
         }
         .onAppear {
             
             vm.onAppear()
         }
+        .animation(.default)
+        .ignoresSafeArea(.all, edges: .top)
     }
 }
 
 class HomeViewModel : ObservableObject {
     
+    @Published var text = ""
     @Published var messages = [Message]()
     @AppStorage("current_user") var user = ""
     
@@ -72,7 +144,7 @@ class HomeViewModel : ObservableObject {
     
     func fetchAllMessages() {
         
-        firebaseReference(.Message).addSnapshotListener { (snapshot, error) in
+        firebaseReference(.Message).order(by: "timeStamp", descending: false).addSnapshotListener { (snapshot, error) in
             if error != nil {
                 print(error!.localizedDescription)
                 return
@@ -102,6 +174,22 @@ class HomeViewModel : ObservableObject {
             }
         }
     }
+    
+    func sendMessage() {
+        
+        let msg = Message(user: user, msg: text, timeStamp: Date())
+        
+        let _ = try! firebaseReference(.Message).addDocument(from: msg) { (error) in
+            
+            if error != nil {
+                print(error!.localizedDescription)
+                return
+            }
+            
+            self.text = ""
+        }
+    }
+        
 }
 
 //struct HomeView_Previews: PreviewProvider {
