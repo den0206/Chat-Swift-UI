@@ -16,7 +16,7 @@ struct Chat_Swift_UIApp: App {
     var body: some Scene {
         
         WindowGroup {
-            HomeView()
+            RecentsView()
         }
     }
 }
