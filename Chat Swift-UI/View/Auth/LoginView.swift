@@ -10,7 +10,6 @@ import SwiftUI
 struct LoginView: View {
     
     @StateObject var vm = AuthViewModel()
-    
     var body: some View {
         
         ZStack {
@@ -54,7 +53,7 @@ struct LoginView: View {
                 Spacer(minLength: 0)
                 
                 Button(action: {
-                    print("Login")
+                    vm.login()
                 }) {
                     Text("Login")
                         .fontWeight(.bold)
@@ -138,10 +137,5 @@ struct CustomTextField : View {
             .clipShape(Capsule())
         }
         .padding()
-    }
-}
-struct LoginView_Previews: PreviewProvider {
-    static var previews: some View {
-        LoginView()
     }
 }

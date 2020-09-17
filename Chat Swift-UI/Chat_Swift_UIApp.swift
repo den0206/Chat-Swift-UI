@@ -16,8 +16,17 @@ struct Chat_Swift_UIApp: App {
     var body: some Scene {
         
         WindowGroup {
-            LoginView()
+            
+            if Auth.auth().currentUser == nil {
+                LoginView()
+            } else {
+            
+                MainView()
+            }
+           
+    
         }
+        
     }
 }
 

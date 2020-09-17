@@ -9,6 +9,7 @@ import Foundation
 import FirebaseFirestore
 
 enum References : String {
+    case User
     case Message
    
     

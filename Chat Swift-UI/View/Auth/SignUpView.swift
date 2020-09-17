@@ -10,6 +10,8 @@ import SwiftUI
 struct SignUpView: View {
     
     @ObservedObject var vm : AuthViewModel
+
+ 
     
     var body: some View {
         
@@ -37,7 +39,8 @@ struct SignUpView: View {
                     Spacer(minLength: 0)
 
                     
-                    VStack(spacing : 20) {
+                    VStack(spacing : 10) {
+                        CustomTextField(imageName: "person", placeholder: "Name", text: $vm.signUpName)
                         CustomTextField(imageName: "person", placeholder: "Email", text: $vm.signUpEmail)
                         CustomTextField(imageName: "lock", placeholder: "Password", text: $vm.signUpPassword)
                         CustomTextField(imageName: "lock", placeholder: "Password Confirmation", text: $vm.PasswordConfirmation)
@@ -48,7 +51,7 @@ struct SignUpView: View {
 
                     
                     Button(action: {
-                        vm.signUp()
+//                        vm.signUp()
                     }) {
                         
                         Text("Sign Up")

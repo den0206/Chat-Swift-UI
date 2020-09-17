@@ -21,15 +21,16 @@ class AuthViewModel: ObservableObject {
     }
     
     /// signUop
+    @Published var signUpName = ""
     @Published var signUpEmail = ""
     @Published var signUpPassword = ""
     @Published var PasswordConfirmation = ""
     
     var disableSignUpButton : Bool {
-        return !(signUpPassword != "" && signUpEmail != "" && PasswordConfirmation != "")
+        return !(signUpPassword != "" && signUpEmail != "" && PasswordConfirmation != "" && signUpName != "")
     }
     var disableSignUpColor : Color {
-        return !(signUpPassword != "" && signUpEmail != "" && PasswordConfirmation != "") ? Color.gray : Color.white
+        return !(signUpPassword != "" && signUpEmail != "" && PasswordConfirmation != ""  && signUpName != "" ) ? Color.gray : Color.white
     }
     
     @Published var showSignUp = false
@@ -53,7 +54,18 @@ class AuthViewModel: ObservableObject {
             return
         }
         
-        print("Login")
+        AuthService.loginUser(email: loginEmail, password: loginPassword) { (result, error) in
+            
+            if error != nil {
+                self.showAlert = true
+
+                self.errorMessage = error!.localizedDescription
+                return
+            }
+            
+            
+            
+        }
         
     }
     
@@ -62,7 +74,7 @@ class AuthViewModel: ObservableObject {
     
     func signUp() {
         
-        guard signUpPassword != "" && signUpEmail != "" && PasswordConfirmation != "" else {
+        guard signUpPassword != "" && signUpEmail != "" && PasswordConfirmation != "" && signUpName != "" else {
             showAlert = true
             errorMessage = "項目を埋めてください"
             return
@@ -80,7 +92,17 @@ class AuthViewModel: ObservableObject {
             return
         }
         
-        print("Sign Up")
+        AuthService.registerUser(email: signUpEmail, password: signUpPassword, name: signUpName) { (error) in
+            
+            if error != nil {
+                
+                self.showAlert = true
+                self.errorMessage = error!.localizedDescription
+                return
+            }
+        }
+        
+        
         
     }
     
