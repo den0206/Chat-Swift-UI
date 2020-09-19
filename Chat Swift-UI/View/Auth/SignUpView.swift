@@ -9,89 +9,76 @@ import SwiftUI
 
 struct SignUpView: View {
     
-    @ObservedObject var vm : AuthViewModel
-
- 
+    @EnvironmentObject var userInfo : UserInfo
+    @State private var user : UserViewModel = UserViewModel()
+    @Environment(\.presentationMode) var presentationMode
+    
     
     var body: some View {
         
-        ZStack(alignment: Alignment(horizontal: .trailing, vertical: .top) , content: {
-            
-            
-            /// Z1
-            authBackground()
-                .ignoresSafeArea(.all, edges: .all)
-            
-            /// Z2
-                
-                VStack {
-        
-                    Spacer(minLength: 30)
-                    
-                    
-                    Text("Sign Up")
-                        .font(.largeTitle)
-                        .fontWeight(.heavy)
-                        .foregroundColor(.white)
-                        .padding(.top, 20)
-                    
-                    
-                    Spacer(minLength: 0)
-
-                    
-                    VStack(spacing : 10) {
-                        CustomTextField(imageName: "person", placeholder: "Name", text: $vm.signUpName)
-                        CustomTextField(imageName: "person", placeholder: "Email", text: $vm.signUpEmail)
-                        CustomTextField(imageName: "lock", placeholder: "Password", text: $vm.signUpPassword)
-                        CustomTextField(imageName: "lock", placeholder: "Password Confirmation", text: $vm.PasswordConfirmation)
-                        
-                    }.padding(.top)
-                    
-                  
-
-                    
-                    Button(action: {
-//                        vm.signUp()
-                    }) {
-                        
-                        Text("Sign Up")
-                            .fontWeight(.bold)
-                            .foregroundColor(.red)
-                            .padding(.vertical)
-                            .frame(width : UIScreen.main.bounds.width - 30)
-                            .background(vm.disableSignUpColor)
-                            .clipShape(Capsule())
-                            
-                    }
-                    .disabled(vm.disableSignUpButton)
-                    .alert(isPresented: $vm.showAlert) {
-                        
-                        Alert(title: Text("Error"), message: Text(vm.errorMessage), dismissButton: .default(Text("OK")))
-                    
+        NavigationView {
+            VStack {
+                Group {
+                    VStack(alignment: .leading) {
+                        TextField("Fullname", text: $user.fullname)
+                      if !user.validNameText.isEmpty {
+                        Text(user.validNameText).font(.caption).foregroundColor(.red)
+                        }
                     }
                     
-                    Spacer(minLength: 0)
+                    VStack(alignment: .leading) {
+                        TextField("Email Address", text: $user.email)
+                        if !user.validEmailText.isEmpty {
+                            Text(user.validEmailText).font(.caption).foregroundColor(.red)
+                        }
+                    }
+                    
+                    VStack(alignment: .leading) {
+                        SecureField("password", text: $user.password)
+                        if !user.validPasswordText.isEmpty {
+                            Text(user.validPasswordText).font(.caption).foregroundColor(.red)
+                        }
+                    }
+                    
+                    VStack(alignment: .leading) {
+                        SecureField("password", text: $user.confirmPassword)
+                        if !user.passwordsMatch(_confirmPW: user.confirmPassword) {
+                            Text(user.validConfirmPasswordText).font(.caption).foregroundColor(.red)
+                        }
+                    }
+                    
+                    
                 }
-           
-            
-            /// Z3
-            
-            Button(action: {
-                vm.showSignUp = false
-            }) {
-                Image(systemName: "xmark")
-                    .foregroundColor(.white)
-                    .padding()
-                    .background(Color.black.opacity(0.4))
-                    .clipShape(Circle())
+                .frame(width : 300)
+                .textFieldStyle(RoundedBorderTextFieldStyle())
+                
+                VStack(spacing : 20) {
+                    
+                    Button(action: {}) {
+                        Text("Register")
+                            .foregroundColor(.white)
+                            .padding(.vertical,15)
+                            .frame(width: 200)
+                            .background(Color.green)
+                            .cornerRadius(8)
+                            .opacity(user.isSignUpComplete ? 1 : 0.7)
+                    }
+                    .disabled(!user.isSignUpComplete)
+                    
+                    Spacer()
+                }
+                .padding()
+                
             }
-            .padding(.trailing)
-            .padding(.top,12)
+            .padding(.top)
             
-        })
-        
-        
-        
-        
+            .navigationBarItems(trailing: Button(action: {
+                self.presentationMode.wrappedValue.dismiss()
+                
+            }, label: {
+                Text("Dismiss")
+            }))
+            
+        }
     }
 }

@@ -9,27 +9,23 @@ import SwiftUI
 
 struct MainView: View {
     
-    @StateObject var vm = MainViewModel()
-    
+    @EnvironmentObject var userInfo : UserInfo
     
     var body: some View {
         
-        VStack {
-            Text(vm.currentUser!.name)
-            
-            Button(action: {vm.logout()}) {
-                Text("Logout")
-                    .foregroundColor(.white)
-                    .padding(.vertical)
-                    .padding(.horizontal)
-                    .background(Color.red)
-                    .clipShape(Capsule())
-            }
-            .fullScreenCover(isPresented: $vm.showAuth) {
-                LoginView()
-            }
+        NavigationView {
+            Text("Logedin User")
+                .navigationBarTitle("Chat")
+                .navigationBarItems(trailing:
+                   Button(action: {
+                    self.userInfo.isUserAuthenTicated = .signedOut
+                   }, label: {
+                        Text("Logout")
+                    })
+                )
         }
-
+        
+        
     }
 }
 

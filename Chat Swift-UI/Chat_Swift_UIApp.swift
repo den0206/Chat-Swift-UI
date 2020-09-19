@@ -11,19 +11,14 @@ import Firebase
 @main
 struct Chat_Swift_UIApp: App {
     
-     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
+    var userInfo = UserInfo()
     
     var body: some Scene {
         
         WindowGroup {
             
-            if Auth.auth().currentUser == nil {
-                LoginView()
-            } else {
-            
-                MainView()
-            }
-           
+            ContentView().environmentObject(userInfo)
     
         }
         

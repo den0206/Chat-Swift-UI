@@ -13,7 +13,7 @@ class MainViewModel: ObservableObject {
     var currentUser : User?
     @Published var showAuth = false
     
-
+    
     init() {
         checkLogin()
     }
@@ -26,7 +26,9 @@ class MainViewModel: ObservableObject {
             }
         } else {
             currentUser = User.currentUser()!
+            
         }
+ 
     }
     
     func logout() {
@@ -46,6 +48,5 @@ class MainViewModel: ObservableObject {
             print("Can't Log out")
         }
     }
-    
 }
 

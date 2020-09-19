@@ -33,6 +33,7 @@ class AuthViewModel: ObservableObject {
         return !(signUpPassword != "" && signUpEmail != "" && PasswordConfirmation != ""  && signUpName != "" ) ? Color.gray : Color.white
     }
     
+    @Published var showMainView = false
     @Published var showSignUp = false
     @Published var showAlert = false
     var errorMessage = ""
@@ -63,6 +64,8 @@ class AuthViewModel: ObservableObject {
                 return
             }
             
+            self.showMainView = true
+        
             
             
         }

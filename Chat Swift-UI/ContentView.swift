@@ -8,9 +8,24 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    @EnvironmentObject var userInfo : UserInfo
+    
     var body: some View {
-        Text("Hello, world!")
-            .padding()
+        
+        Group {
+            if userInfo.isUserAuthenTicated == .undefined {
+                Text("Loading")
+            } else if userInfo.isUserAuthenTicated == .signedOut {
+                LoginView()
+            } else {
+                MainView()
+            }
+        }
+        .onAppear {
+            self.userInfo.configureStateDidChange()
+        }
+       
     }
 }
 
