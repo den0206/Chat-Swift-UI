@@ -13,6 +13,8 @@ struct SignUpView: View {
     @State private var user : UserViewModel = UserViewModel()
     @Environment(\.presentationMode) var presentationMode
     
+    @State private var showAllert : Bool = false
+    @State private var errorMessage = ""
     
     var body: some View {
         
@@ -21,6 +23,7 @@ struct SignUpView: View {
                 Group {
                     VStack(alignment: .leading) {
                         TextField("Fullname", text: $user.fullname)
+                            .autocapitalization(.none)
                       if !user.validNameText.isEmpty {
                         Text(user.validNameText).font(.caption).foregroundColor(.red)
                         }
@@ -54,7 +57,21 @@ struct SignUpView: View {
                 
                 VStack(spacing : 20) {
                     
-                    Button(action: {}) {
+                    Button(action: {
+                        FBAuth.createUser(email: user.email, name: user.fullname, password: user.password) { (result) in
+                            
+                            switch result {
+                            
+                            case .success(_):
+                                print("Create")
+                            case .failure(let error):
+                                print(error.localizedDescription)
+                                errorMessage = error.localizedDescription
+                                self.showAllert = true
+                                return
+                            }
+                        }
+                    }) {
                         Text("Register")
                             .foregroundColor(.white)
                             .padding(.vertical,15)
@@ -64,6 +81,10 @@ struct SignUpView: View {
                             .opacity(user.isSignUpComplete ? 1 : 0.7)
                     }
                     .disabled(!user.isSignUpComplete)
+                    .alert(isPresented: $showAllert) {
+                        
+                        Alert(title: Text("Error"), message: Text(errorMessage), dismissButton: .default(Text("OK")))
+                    }
                     
                     Spacer()
                 }

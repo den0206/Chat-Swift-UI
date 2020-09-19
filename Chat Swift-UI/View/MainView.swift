@@ -19,7 +19,17 @@ struct MainView: View {
                 .navigationBarTitle("Chat")
                 .navigationBarItems(trailing:
                    Button(action: {
-                    self.userInfo.isUserAuthenTicated = .signedOut
+                    FBAuth.logOut { (result) in
+                        
+                        switch result {
+                        
+                        case .success(_):
+                            self.userInfo.isUserAuthenTicated = .signedOut
+
+                        case .failure(let error):
+                            print(error.localizedDescription)
+                        }
+                    }
                    }, label: {
                         Text("Logout")
                     })

@@ -33,3 +33,31 @@ extension FirestoreError : LocalizedError {
         }
     }
 }
+
+enum EmailAuthError : Error {
+    case incorrectPassword
+    case invalidEmail
+    case accountDoesnotExist
+    case unknownError
+    case couldNotCreate
+    case extraDataNotCreated
+    
+    var errorDescription : String? {
+        
+        switch self {
+        case .incorrectPassword:
+            return NSLocalizedString("In Correct Password", comment: "")
+        case .invalidEmail:
+            return NSLocalizedString("Not a valid email", comment: "")
+        case .accountDoesnotExist:
+            return NSLocalizedString("Account Does Not exist", comment: "")
+        case .unknownError:
+            return NSLocalizedString("Unknown Error", comment: "")
+        case .couldNotCreate:
+            return NSLocalizedString("Could not Create User", comment: "")
+        case .extraDataNotCreated:
+            return NSLocalizedString("could not save User na,e", comment: "")
+            
+        }
+    }
+}

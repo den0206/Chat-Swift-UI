@@ -9,31 +9,38 @@ import SwiftUI
 
 struct LoginView: View {
     
-    enum Action {
-        case none
+    enum Action : Identifiable{
         case signUp, resetPassword
+        
+        var id : Int {
+            hashValue
+        }
     }
     
     @State private var showSheet  = false
-    @State private var action = Action.none {
-        willSet {
-            showSheet = newValue != .none
-        }
-    }
+    @State private var action : Action?
     
     var body: some View {
     
         SignInWithEmailView(showSheet: $showSheet, action: $action)
-            .sheet(isPresented: $showSheet) {
-                
-                if self.action == .signUp {
+            .sheet(item: $action) { item in
+                switch item {
+                case .signUp :
                     SignUpView()
-                }
-                
-                if self.action == .resetPassword {
+                case .resetPassword :
                     ForgotPasswordView()
                 }
             }
+//            .sheet(isPresented: $showSheet) {
+//
+//                if self.action == .signUp {
+//                    SignUpView()
+//                }
+//
+//                if self.action == .resetPassword {
+//                    ForgotPasswordView()
+//                }
+//            }
             
        
     }
