@@ -12,7 +12,7 @@ struct SignInWithEmailView: View {
     @EnvironmentObject var userInfo : UserInfo
     @State private var user : UserViewModel = UserViewModel()
     @Binding var showSheet : Bool
-    @Binding var action : LoginView.Action? 
+    @Binding var action : LoginView.Action
     
     var body: some View {
         

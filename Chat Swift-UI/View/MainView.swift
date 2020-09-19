@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Firebase
 
 struct MainView: View {
     
@@ -14,7 +15,7 @@ struct MainView: View {
     var body: some View {
         
         NavigationView {
-            Text("Logedin User")
+            Text("Logedin User, \(userInfo.user.name)")
                 .navigationBarTitle("Chat")
                 .navigationBarItems(trailing:
                    Button(action: {
@@ -23,6 +24,19 @@ struct MainView: View {
                         Text("Logout")
                     })
                 )
+                .onAppear {
+                    guard let uid = Auth.auth().currentUser?.uid else {return}
+                    
+                    FBFiresore.fetchFBUser(uid: uid) { (result) in
+                        switch result {
+                        case .failure(let error) :
+                            print(error.localizedDescription)
+                        case .success(let user) :
+                            self.userInfo.user = user
+                        }
+                    }
+                    
+                }
         }
         
         

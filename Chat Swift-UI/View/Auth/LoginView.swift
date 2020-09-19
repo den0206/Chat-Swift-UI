@@ -10,11 +10,16 @@ import SwiftUI
 struct LoginView: View {
     
     enum Action {
+        case none
         case signUp, resetPassword
     }
     
     @State private var showSheet  = false
-    @State private var action : Action?
+    @State private var action = Action.none {
+        willSet {
+            showSheet = newValue != .none
+        }
+    }
     
     var body: some View {
     
@@ -23,7 +28,9 @@ struct LoginView: View {
                 
                 if self.action == .signUp {
                     SignUpView()
-                } else {
+                }
+                
+                if self.action == .resetPassword {
                     ForgotPasswordView()
                 }
             }

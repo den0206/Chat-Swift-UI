@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import FirebaseAuth
 
 class UserInfo : ObservableObject {
     
@@ -14,10 +15,29 @@ class UserInfo : ObservableObject {
     }
     
     @Published var isUserAuthenTicated : AuthState = .undefined
+    @Published var user : FBUser = .init(uid : "", name : "", email : "")
+    
+    var listnerHandle : AuthStateDidChangeListenerHandle?
     
     func configureStateDidChange() {
-        
-        self.isUserAuthenTicated = .signedOut
+        listnerHandle = Auth.auth().addStateDidChangeListener({ (_, user) in
+            
+            guard let user = user else {
+                self.isUserAuthenTicated = .signedOut
+                return
+            }
+            
+            self.isUserAuthenTicated = .signedIn
+//            FBFiresore.fetchFBUser(uid: user.uid) { (result) in
+//                switch result {
+//                case .failure(let error) :
+//                    print(error.localizedDescription)
+//                case .success(let user) :
+//                    self.user = user
+//                }
+//            }
+        })
+      
         
     }
 }
