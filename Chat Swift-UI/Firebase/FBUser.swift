@@ -30,7 +30,7 @@ extension FBUser {
         let uid = dic[FBKeys.User.uid] as? String ?? ""
         let name = dic[FBKeys.User.name] as? String ?? ""
         let email = dic[FBKeys.User.email] as? String ?? ""
-        let avatar = dic[FBKeys.User.avatarString] as? String ?? ""
+        let avatar = dic[kAVATAR] as? String ?? ""
         
         self.init(uid: uid, name: name, email: email, avatarString : avatar)
     }

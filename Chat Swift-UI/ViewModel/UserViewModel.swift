@@ -15,11 +15,18 @@ struct UserViewModel {
     var imageData : Data = .init(count : 0)
     
     var isSignUpComplete : Bool {
-        
-        if !selectedImage() || !isEmailValid(_email: email) || isEmpty(_field: fullname) || !isPasswordValid(_password: password) || !passwordsMatch(_confirmPW: confirmPassword) {
-            return false
+        if test_Mode {
+            if !selectedImage() || !isEmailValid(_email: email) || isEmpty(_field: fullname) || !passwordsMatch(_confirmPW: confirmPassword) {
+                return false
+            }
+            return true
+        } else {
+            if !selectedImage() || !isEmailValid(_email: email) || isEmpty(_field: fullname) || !isPasswordValid(_password: password) || !passwordsMatch(_confirmPW: confirmPassword) {
+                return false
+            }
+            return true
         }
-        return true
+       
     }
     
     var isLoginComplete : Bool {

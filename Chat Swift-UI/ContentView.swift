@@ -19,7 +19,7 @@ struct ContentView: View {
             } else if userInfo.isUserAuthenTicated == .signedOut {
                 LoginView()
             } else {
-                MainView()
+                CircularTabView()
             }
         }
         .onAppear {
