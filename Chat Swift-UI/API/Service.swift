@@ -28,7 +28,7 @@ class AuthService {
                          kNAME : name ]
             
             setUserDefaults(values: value, key: kCURRENTUSER)
-            firebaseReference(.User).document(uid).setData(value, completion: completion)
+            firebaseReference(.users).document(uid).setData(value, completion: completion)
         }
         
     }
@@ -40,7 +40,7 @@ class AuthService {
     
     static func fetchCurrentUser(uid : String, completion : @escaping(User) -> Void) {
         
-        firebaseReference(.User).document(uid).getDocument { (snapshot, error) in
+        firebaseReference(.users).document(uid).getDocument { (snapshot, error) in
             
             guard let snapshot = snapshot else {return}
             

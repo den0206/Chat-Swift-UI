@@ -11,14 +11,18 @@ import Firebase
 struct MainView: View {
     
     @EnvironmentObject var userInfo : UserInfo
-//    @ObservedObject var vm : MainViewModel = MainViewModel()
+    @State private var showAllert = false
+    @State private var showModel = false
     
     var body: some View {
-        
+
         NavigationView {
             Text("Logedin User, \(userInfo.user.name)")
                 .navigationBarTitle("Chat", displayMode : .inline)
-                .navigationBarItems(leading: Button(action: {}, label: {
+                .navigationBarItems(leading: Button(action: {
+                    
+                    self.showAllert = true
+                }, label: {
                     if userInfo.user.avatarString != "" {
                         Image(uiImage: downloadImageFromData(picturedata: userInfo.user.avatarString)!)
                             .resizable()
@@ -29,10 +33,24 @@ struct MainView: View {
                             .fill(Color.gray)
                             .frame(width: 30, height: 30)
                     }
+
                     
                     
                 }), trailing:
                     Button(action: {
+                        self.showModel = true
+                    }, label: {
+                        Image(systemName: "plus")
+                            .foregroundColor(.black)
+                            .font(.system(size: 22))
+                    }))
+                .sheet(isPresented: $showModel, content: {
+                    UsersView()
+                })
+                .alert(isPresented: $showAllert, content: { () -> Alert in
+                    
+                    Alert(title: Text("LogOut"), message: Text("ログアウトしますか？"), primaryButton: .cancel(Text("キャンセル")), secondaryButton: .destructive(Text("ログアウト"), action: {
+                        
                         FBAuth.logOut { (result) in
                             
                             switch result {
@@ -44,9 +62,8 @@ struct MainView: View {
                                 print(error.localizedDescription)
                             }
                         }
-                    }, label: {
-                        Text("Logout")
                     }))
+                })
                 .onAppear {
                     guard let uid = Auth.auth().currentUser?.uid else {return}
                     
@@ -56,7 +73,6 @@ struct MainView: View {
                             print(error.localizedDescription)
                         case .success(let user) :
                             self.userInfo.user = user
-                            print(user)
                         }
                     }
                     

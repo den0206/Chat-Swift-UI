@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct FBUser {
+struct FBUser : Hashable{
     
     let uid : String
     let name : String
@@ -27,7 +27,7 @@ extension FBUser {
     
     init?(dic : [String : Any]) {
         
-        let uid = dic[FBKeys.User.uid] as? String ?? ""
+        let uid = dic[kUSERID] as? String ?? ""
         let name = dic[FBKeys.User.name] as? String ?? ""
         let email = dic[FBKeys.User.email] as? String ?? ""
         let avatar = dic[kAVATAR] as? String ?? ""

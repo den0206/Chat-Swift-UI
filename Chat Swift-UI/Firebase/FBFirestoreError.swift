@@ -13,6 +13,7 @@ enum FirestoreError : Error {
     case noDocumentSNapshot
     case noSnapshotData
     case noUser
+    case emptySnapshot
 }
 
 extension FirestoreError : LocalizedError {
@@ -30,6 +31,9 @@ extension FirestoreError : LocalizedError {
             return NSLocalizedString("No Snapshot", comment: "")
         case .noUser:
             return NSLocalizedString("No User", comment: "")
+        case .emptySnapshot:
+            return NSLocalizedString("emptySnapshot", comment: "")
+
         }
     }
 }

@@ -9,6 +9,10 @@ import Foundation
 import SwiftUI
 
 
+func hideKeyBord() {
+    UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+}
+
 func authBackground() -> LinearGradient {
     
     return LinearGradient(gradient: .init(colors: [Color.black, Color.green]), startPoint: .top, endPoint: .bottom)

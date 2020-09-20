@@ -21,12 +21,13 @@
 		3A52AC59250E418900997131 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3A52AC58250E418900997131 /* Preview Assets.xcassets */; };
 		3A52AC62250E41A500997131 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A52AC61250E41A500997131 /* HomeView.swift */; };
 		3A7260DD250E4340001408A9 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3A7260DC250E4340001408A9 /* GoogleService-Info.plist */; };
+		3A89694B2517344F00450B49 /* UsersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A89694A2517344F00450B49 /* UsersView.swift */; };
+		3A89694F25173C0000450B49 /* UsersViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A89694E25173C0000450B49 /* UsersViewModel.swift */; };
 		3AB27EC225111A24000646DC /* RecentsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AB27EC125111A24000646DC /* RecentsView.swift */; };
 		3AB27EC425111BE3000646DC /* Global Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AB27EC325111BE3000646DC /* Global Extensions.swift */; };
 		3ACB76AF251239780016F17C /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ACB76AE251239780016F17C /* LoginView.swift */; };
 		3ACB76B225123F190016F17C /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ACB76B125123F190016F17C /* AuthViewModel.swift */; };
 		3ACB76B4251242C40016F17C /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ACB76B3251242C40016F17C /* SignUpView.swift */; };
-		3ACBEC4F251717FB00DB127A /* MainVIewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ACBEC4E251717FB00DB127A /* MainVIewModel.swift */; };
 		3ACBEC532517285500DB127A /* CircularTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ACBEC522517285500DB127A /* CircularTabView.swift */; };
 		3AD7054B2516074B0072F25A /* FBAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AD7054A2516074B0072F25A /* FBAuth.swift */; };
 		3AE9E75425137B1800AD001D /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AE9E75325137B1800AD001D /* Constants.swift */; };
@@ -58,12 +59,13 @@
 		3A52AC5A250E418900997131 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3A52AC61250E41A500997131 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		3A7260DC250E4340001408A9 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		3A89694A2517344F00450B49 /* UsersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersView.swift; sourceTree = "<group>"; };
+		3A89694E25173C0000450B49 /* UsersViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersViewModel.swift; sourceTree = "<group>"; };
 		3AB27EC125111A24000646DC /* RecentsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentsView.swift; sourceTree = "<group>"; };
 		3AB27EC325111BE3000646DC /* Global Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Global Extensions.swift"; sourceTree = "<group>"; };
 		3ACB76AE251239780016F17C /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		3ACB76B125123F190016F17C /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
 		3ACB76B3251242C40016F17C /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
-		3ACBEC4E251717FB00DB127A /* MainVIewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainVIewModel.swift; sourceTree = "<group>"; };
 		3ACBEC522517285500DB127A /* CircularTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularTabView.swift; sourceTree = "<group>"; };
 		3AD7054A2516074B0072F25A /* FBAuth.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FBAuth.swift; path = ../../../../../.Trash/FBAuth.swift; sourceTree = "<group>"; };
 		3AE9E75325137B1800AD001D /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -168,6 +170,7 @@
 			children = (
 				3ACB76AD251239660016F17C /* Auth */,
 				3AE9E7552513800300AD001D /* MainView.swift */,
+				3A89694A2517344F00450B49 /* UsersView.swift */,
 				3A52AC61250E41A500997131 /* HomeView.swift */,
 				3A47ADB4250E4CFF00CF3E15 /* ChatCell.swift */,
 				3AB27EC125111A24000646DC /* RecentsView.swift */,
@@ -192,7 +195,7 @@
 			children = (
 				3A2E85B025159D4E00F66910 /* UserInfo.swift */,
 				3A2E85B42515A28500F66910 /* UserViewModel.swift */,
-				3ACBEC4E251717FB00DB127A /* MainVIewModel.swift */,
+				3A89694E25173C0000450B49 /* UsersViewModel.swift */,
 				3ACB76B125123F190016F17C /* AuthViewModel.swift */,
 			);
 			path = ViewModel;
@@ -355,13 +358,14 @@
 				3A2E85B52515A28500F66910 /* UserViewModel.swift in Sources */,
 				3ACB76AF251239780016F17C /* LoginView.swift in Sources */,
 				3A18A80825137239002556DF /* Service.swift in Sources */,
-				3ACBEC4F251717FB00DB127A /* MainVIewModel.swift in Sources */,
 				3AF6698F2515DDF1006C707B /* FBKeys.swift in Sources */,
 				3ACB76B4251242C40016F17C /* SignUpView.swift in Sources */,
 				3AF6698C2515DCFB006C707B /* FBUser.swift in Sources */,
 				3AF669982515E18F006C707B /* FBFirestoreError.swift in Sources */,
+				3A89694B2517344F00450B49 /* UsersView.swift in Sources */,
 				3AE9E75425137B1800AD001D /* Constants.swift in Sources */,
 				3AB27EC425111BE3000646DC /* Global Extensions.swift in Sources */,
+				3A89694F25173C0000450B49 /* UsersViewModel.swift in Sources */,
 				3A47ADB0250E468300CF3E15 /* Message.swift in Sources */,
 				3A52AC54250E418700997131 /* ContentView.swift in Sources */,
 				3AF669942515DF45006C707B /* FBFirestore.swift in Sources */,

@@ -157,8 +157,19 @@ struct ImagePicker: UIViewControllerRepresentable {
         
         func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
             if let uiImage = info[.originalImage] as? UIImage {
-                let data = uiImage.jpegData(compressionQuality: 0.3)
-                self.parent.image = data!
+                let data = uiImage.jpegData(compressionQuality: 0.2)
+                
+                let dataToKB = Double(data!.count) / 1000.0
+                print(dataToKB)
+                
+                if dataToKB < 1000.0 {
+                    self.parent.image = data!
+
+                } else {
+                    print("Over size")
+                }
+                
+                
             }
             
             parent.presentationMode.wrappedValue.dismiss()
