@@ -15,7 +15,7 @@ class UserInfo : ObservableObject {
     }
     
     @Published var isUserAuthenTicated : AuthState = .undefined
-    @Published var user : FBUser = .init(uid : "", name : "", email : "")
+    @Published var user : FBUser = .init(uid : "", name : "", email : "", avatarString : "")
     
     var listnerHandle : AuthStateDidChangeListenerHandle?
     

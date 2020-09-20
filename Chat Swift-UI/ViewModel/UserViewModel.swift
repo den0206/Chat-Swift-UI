@@ -12,10 +12,11 @@ struct UserViewModel {
     var password = ""
     var fullname = ""
     var confirmPassword = ""
+    var imageData : Data = .init(count : 0)
     
     var isSignUpComplete : Bool {
         
-        if !isEmailValid(_email: email) || isEmpty(_field: fullname) || !isPasswordValid(_password: password) || !passwordsMatch(_confirmPW: confirmPassword) {
+        if !selectedImage() || !isEmailValid(_email: email) || isEmpty(_field: fullname) || !isPasswordValid(_password: password) || !passwordsMatch(_confirmPW: confirmPassword) {
             return false
         }
         return true
@@ -40,6 +41,9 @@ struct UserViewModel {
         return _field.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
     }
     
+    func selectedImage() -> Bool {
+        return !(self.imageData == .init(count :0))
+    }
     func isEmailValid(_email : String) -> Bool {
         
         let emailRegEx = "[A-Z0-9a-z._+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}"
@@ -55,6 +59,15 @@ struct UserViewModel {
     }
     
     //MARK: - Error String
+    
+    var validImageText : String {
+        if selectedImage() {
+            return ""
+        } else {
+            return "画像を選択してください"
+
+        }
+    }
     
     var validNameText : String {
         if !isEmpty(_field: fullname) {

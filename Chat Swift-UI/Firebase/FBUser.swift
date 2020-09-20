@@ -12,12 +12,14 @@ struct FBUser {
     let uid : String
     let name : String
     let email : String
+    var avatarString : String
     
-    init(uid : String, name : String, email : String) {
+    init(uid : String, name : String, email : String, avatarString : String) {
         
         self.uid = uid
         self.name = name
         self.email = email
+        self.avatarString = avatarString
     }
 }
 
@@ -28,8 +30,9 @@ extension FBUser {
         let uid = dic[FBKeys.User.uid] as? String ?? ""
         let name = dic[FBKeys.User.name] as? String ?? ""
         let email = dic[FBKeys.User.email] as? String ?? ""
+        let avatar = dic[FBKeys.User.avatarString] as? String ?? ""
         
-        self.init(uid: uid, name: name, email: email)
+        self.init(uid: uid, name: name, email: email, avatarString : avatar)
     }
     
     static func dataDict(uid : String, name : String, email : String) -> [String : Any] {
