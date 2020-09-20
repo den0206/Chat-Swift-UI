@@ -27,6 +27,7 @@ struct CircularTabView: View {
             }
             
             CircularTab(index: $index)
+                .frame(height: 70)
         }
         .edgesIgnoringSafeArea(.bottom)
     }
@@ -83,10 +84,12 @@ struct tabButton : View {
                         .clipShape(Circle())
                         .offset(y : -20)
                         .padding(.bottom, 30)
+                    
+                    Text(title)
+                        .foregroundColor(Color.black.opacity(0.8))
                 }
                 
-                Text(title)
-                    .foregroundColor(Color.black.opacity(0.8))
+                
             }
         }
         

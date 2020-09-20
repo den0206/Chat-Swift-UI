@@ -31,17 +31,7 @@ struct LoginView: View {
                     ForgotPasswordView()
                 }
             }
-//            .sheet(isPresented: $showSheet) {
-//
-//                if self.action == .signUp {
-//                    SignUpView()
-//                }
-//
-//                if self.action == .resetPassword {
-//                    ForgotPasswordView()
-//                }
-//            }
-            
+
        
     }
     

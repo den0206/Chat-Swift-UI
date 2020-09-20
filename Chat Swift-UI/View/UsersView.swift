@@ -12,6 +12,8 @@ struct UsersView: View {
 
     @State private var isSearchng = false
     @State private var searchText : String = ""
+    @Binding var selectedId : String
+    @Binding var pushNav : Bool
     @Environment(\.presentationMode) var presentationMode
     @ObservedObject var vm : UsersViewModel = UsersViewModel()
     
@@ -27,7 +29,15 @@ struct UsersView: View {
                 
                 List(vm.users, id : \.self) { user in
                     
-                    Button(action: {print(user.uid)}) {
+                    Button(action: {
+                        self.selectedId = user.uid
+                        self.presentationMode.wrappedValue.dismiss()
+                        
+                        /// create chatRoomId
+                        
+                        self.pushNav = true
+
+                    }) {
                         UserCell(user: user)
                     }
                    
@@ -57,11 +67,7 @@ struct UsersView: View {
 
 struct UserCell : View {
     
-    var user : FBUser {
-        didSet {
-            print(user)
-        }
-    }
+    var user : FBUser
     
     var body: some View {
         
@@ -149,11 +155,5 @@ struct SearchView : View {
                 .animation(.spring())
             }
         }
-    }
-}
-
-struct UsersView_Previews: PreviewProvider {
-    static var previews: some View {
-        UsersView()
     }
 }

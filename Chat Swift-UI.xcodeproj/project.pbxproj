@@ -15,6 +15,7 @@
 		3A47ADB0250E468300CF3E15 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A47ADAF250E468300CF3E15 /* Message.swift */; };
 		3A47ADB3250E4A8500CF3E15 /* FIrebaseReference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A47ADB2250E4A8500CF3E15 /* FIrebaseReference.swift */; };
 		3A47ADB5250E4CFF00CF3E15 /* ChatCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A47ADB4250E4CFF00CF3E15 /* ChatCell.swift */; };
+		3A484CEB2517949A004500C1 /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A484CEA2517949A004500C1 /* MessageView.swift */; };
 		3A52AC52250E418700997131 /* Chat_Swift_UIApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A52AC51250E418700997131 /* Chat_Swift_UIApp.swift */; };
 		3A52AC54250E418700997131 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A52AC53250E418700997131 /* ContentView.swift */; };
 		3A52AC56250E418900997131 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3A52AC55250E418900997131 /* Assets.xcassets */; };
@@ -51,6 +52,7 @@
 		3A47ADAF250E468300CF3E15 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		3A47ADB2250E4A8500CF3E15 /* FIrebaseReference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FIrebaseReference.swift; sourceTree = "<group>"; };
 		3A47ADB4250E4CFF00CF3E15 /* ChatCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatCell.swift; sourceTree = "<group>"; };
+		3A484CEA2517949A004500C1 /* MessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageView.swift; sourceTree = "<group>"; };
 		3A52AC4E250E418700997131 /* Chat Swift-UI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Chat Swift-UI.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3A52AC51250E418700997131 /* Chat_Swift_UIApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chat_Swift_UIApp.swift; sourceTree = "<group>"; };
 		3A52AC53250E418700997131 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -171,6 +173,7 @@
 				3ACB76AD251239660016F17C /* Auth */,
 				3AE9E7552513800300AD001D /* MainView.swift */,
 				3A89694A2517344F00450B49 /* UsersView.swift */,
+				3A484CEA2517949A004500C1 /* MessageView.swift */,
 				3A52AC61250E41A500997131 /* HomeView.swift */,
 				3A47ADB4250E4CFF00CF3E15 /* ChatCell.swift */,
 				3AB27EC125111A24000646DC /* RecentsView.swift */,
@@ -346,6 +349,7 @@
 			files = (
 				3A2E85B92515A7DF00F66910 /* SignInWithEmailView .swift in Sources */,
 				3ACB76B225123F190016F17C /* AuthViewModel.swift in Sources */,
+				3A484CEB2517949A004500C1 /* MessageView.swift in Sources */,
 				3AE9E7562513800300AD001D /* MainView.swift in Sources */,
 				3AD7054B2516074B0072F25A /* FBAuth.swift in Sources */,
 				3A47ADB5250E4CFF00CF3E15 /* ChatCell.swift in Sources */,

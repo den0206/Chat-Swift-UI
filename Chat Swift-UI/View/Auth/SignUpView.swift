@@ -12,14 +12,10 @@ struct SignUpView: View {
     
     @EnvironmentObject var userInfo : UserInfo
     @State private var user : UserViewModel = UserViewModel()
-    @State private var showPicker : Bool = false {
-        didSet {
-            print(showPicker)
-        }
-    }
+    @State private var showPicker : Bool = false
     @Environment(\.presentationMode) var presentationMode
     
-    @State private var showAllert : Bool = false
+    @State private var showAlert : Bool = false
     @State private var errorMessage = ""
     
     var body: some View {
@@ -51,7 +47,7 @@ struct SignUpView: View {
                 }
                 .padding(.bottom, 15)
                 .sheet(isPresented: $showPicker) {
-                    ImagePicker(image: $user.imageData)
+                    ImagePicker(image: $user.imageData, errorMessage : $errorMessage, showAlert : $showAlert)
                 }
                 
                 
@@ -105,7 +101,7 @@ struct SignUpView: View {
                             case .failure(let error):
                                 print(error.localizedDescription)
                                 errorMessage = error.localizedDescription
-                                self.showAllert = true
+                                self.showAlert = true
                                 return
                             }
                         }
@@ -119,7 +115,7 @@ struct SignUpView: View {
                             .opacity(user.isSignUpComplete ? 1 : 0.7)
                     }
                     .disabled(!user.isSignUpComplete)
-                    .alert(isPresented: $showAllert) {
+                    .alert(isPresented: $showAlert) {
                         
                         Alert(title: Text("Error"), message: Text(errorMessage), dismissButton: .default(Text("OK")))
                     }
@@ -147,6 +143,8 @@ struct SignUpView: View {
 struct ImagePicker: UIViewControllerRepresentable {
     @Environment(\.presentationMode) var presentationMode
     @Binding var image: Data
+    @Binding var errorMessage : String
+    @Binding var showAlert : Bool
     
     class Coordinator: NSObject, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
         let parent: ImagePicker
@@ -166,7 +164,9 @@ struct ImagePicker: UIViewControllerRepresentable {
                     self.parent.image = data!
 
                 } else {
-                    print("Over size")
+                    self.parent.errorMessage = "画像の容量が大きいです。"
+                    self.parent.showAlert = true
+
                 }
                 
                 
