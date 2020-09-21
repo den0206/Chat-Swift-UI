@@ -16,21 +16,21 @@ struct ChatCell: View {
     var body: some View {
         HStack(spacing : 15) {
             
-            if message.user != user {
-                NickNameView(name: message.user)
+            if message.userId != user {
+                NickNameView(name: message.userId)
             } else {
                 Spacer(minLength: 0)
             }
             
-            VStack(alignment: message.user == user ? .trailing : .leading, spacing: 5, content: {
+            VStack(alignment: message.userId == user ? .trailing : .leading, spacing: 5, content: {
                 
                 Text(message.msg)
                     .fontWeight(.bold)
                     .foregroundColor(.white)
                     .padding()
-                    .background(message.user == user ? Color.green : Color.gray)
+                    .background(message.userId == user ? Color.green : Color.gray)
                     /// Bubble Tail
-                    .clipShape(ChatBubble(myMessage: message.user == user))
+                    .clipShape(ChatBubble(myMessage: message.userId == user))
                     
                 
                 Text(message.timeStamp,style: .time)
@@ -39,8 +39,8 @@ struct ChatCell: View {
                     .padding(message.msg != user ? .trailing : .leading, 10)
             })
             
-            if message.user == user {
-                NickNameView(name: message.user)
+            if message.userId == user {
+                NickNameView(name: message.userId)
             } else {
                 Spacer(minLength: 0)
             }

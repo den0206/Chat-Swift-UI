@@ -55,7 +55,7 @@ struct MainView: View {
                         .font(.system(size: 22))
                 }))
             .sheet(isPresented: $showModel, content: {
-                UsersView(selectedId: $chatRoomId, pushNav : $pushNav)
+                UsersView(chatRoomId: $chatRoomId, pushNav : $pushNav)
             })
             .alert(isPresented: $showAlert, content: { () -> Alert in
                 

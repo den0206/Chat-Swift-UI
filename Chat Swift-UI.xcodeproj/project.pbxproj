@@ -12,6 +12,7 @@
 		3A2E85B125159D4E00F66910 /* UserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A2E85B025159D4E00F66910 /* UserInfo.swift */; };
 		3A2E85B52515A28500F66910 /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A2E85B42515A28500F66910 /* UserViewModel.swift */; };
 		3A2E85B92515A7DF00F66910 /* SignInWithEmailView .swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A2E85B82515A7DF00F66910 /* SignInWithEmailView .swift */; };
+		3A46BE91251856F7005F49C3 /* Recents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A46BE90251856F7005F49C3 /* Recents.swift */; };
 		3A47ADB0250E468300CF3E15 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A47ADAF250E468300CF3E15 /* Message.swift */; };
 		3A47ADB3250E4A8500CF3E15 /* FIrebaseReference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A47ADB2250E4A8500CF3E15 /* FIrebaseReference.swift */; };
 		3A47ADB5250E4CFF00CF3E15 /* ChatCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A47ADB4250E4CFF00CF3E15 /* ChatCell.swift */; };
@@ -26,6 +27,7 @@
 		3A89694F25173C0000450B49 /* UsersViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A89694E25173C0000450B49 /* UsersViewModel.swift */; };
 		3AB27EC225111A24000646DC /* RecentsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AB27EC125111A24000646DC /* RecentsView.swift */; };
 		3AB27EC425111BE3000646DC /* Global Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AB27EC325111BE3000646DC /* Global Extensions.swift */; };
+		3AB350002518526500F47796 /* MessageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AB34FFF2518526500F47796 /* MessageViewModel.swift */; };
 		3ACB76AF251239780016F17C /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ACB76AE251239780016F17C /* LoginView.swift */; };
 		3ACB76B225123F190016F17C /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ACB76B125123F190016F17C /* AuthViewModel.swift */; };
 		3ACB76B4251242C40016F17C /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ACB76B3251242C40016F17C /* SignUpView.swift */; };
@@ -49,6 +51,7 @@
 		3A2E85B025159D4E00F66910 /* UserInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfo.swift; sourceTree = "<group>"; };
 		3A2E85B42515A28500F66910 /* UserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
 		3A2E85B82515A7DF00F66910 /* SignInWithEmailView .swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SignInWithEmailView .swift"; sourceTree = "<group>"; };
+		3A46BE90251856F7005F49C3 /* Recents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recents.swift; sourceTree = "<group>"; };
 		3A47ADAF250E468300CF3E15 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		3A47ADB2250E4A8500CF3E15 /* FIrebaseReference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FIrebaseReference.swift; sourceTree = "<group>"; };
 		3A47ADB4250E4CFF00CF3E15 /* ChatCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatCell.swift; sourceTree = "<group>"; };
@@ -65,6 +68,7 @@
 		3A89694E25173C0000450B49 /* UsersViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersViewModel.swift; sourceTree = "<group>"; };
 		3AB27EC125111A24000646DC /* RecentsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentsView.swift; sourceTree = "<group>"; };
 		3AB27EC325111BE3000646DC /* Global Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Global Extensions.swift"; sourceTree = "<group>"; };
+		3AB34FFF2518526500F47796 /* MessageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageViewModel.swift; sourceTree = "<group>"; };
 		3ACB76AE251239780016F17C /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		3ACB76B125123F190016F17C /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
 		3ACB76B3251242C40016F17C /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
@@ -114,6 +118,7 @@
 		3A47ADB1250E4A6100CF3E15 /* Extension */ = {
 			isa = PBXGroup;
 			children = (
+				3A46BE90251856F7005F49C3 /* Recents.swift */,
 				3A47ADB2250E4A8500CF3E15 /* FIrebaseReference.swift */,
 				3AB27EC325111BE3000646DC /* Global Extensions.swift */,
 				3AE9E75325137B1800AD001D /* Constants.swift */,
@@ -200,6 +205,7 @@
 				3A2E85B42515A28500F66910 /* UserViewModel.swift */,
 				3A89694E25173C0000450B49 /* UsersViewModel.swift */,
 				3ACB76B125123F190016F17C /* AuthViewModel.swift */,
+				3AB34FFF2518526500F47796 /* MessageViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -366,9 +372,11 @@
 				3ACB76B4251242C40016F17C /* SignUpView.swift in Sources */,
 				3AF6698C2515DCFB006C707B /* FBUser.swift in Sources */,
 				3AF669982515E18F006C707B /* FBFirestoreError.swift in Sources */,
+				3A46BE91251856F7005F49C3 /* Recents.swift in Sources */,
 				3A89694B2517344F00450B49 /* UsersView.swift in Sources */,
 				3AE9E75425137B1800AD001D /* Constants.swift in Sources */,
 				3AB27EC425111BE3000646DC /* Global Extensions.swift in Sources */,
+				3AB350002518526500F47796 /* MessageViewModel.swift in Sources */,
 				3A89694F25173C0000450B49 /* UsersViewModel.swift in Sources */,
 				3A47ADB0250E468300CF3E15 /* Message.swift in Sources */,
 				3A52AC54250E418700997131 /* ContentView.swift in Sources */,

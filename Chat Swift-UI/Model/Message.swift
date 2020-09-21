@@ -11,13 +11,13 @@ import FirebaseFirestoreSwift
 struct Message : Codable, Identifiable, Hashable {
     
     @DocumentID var id : String?
-    var user : String
+    var userId : String
     var msg : String
     var timeStamp : Date
     
     enum CodingKeys : String, CodingKey {
         case id
-        case user
+        case userId
         case msg
         case timeStamp
     }

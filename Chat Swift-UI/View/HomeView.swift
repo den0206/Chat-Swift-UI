@@ -177,7 +177,7 @@ class HomeViewModel : ObservableObject {
     
     func sendMessage() {
         
-        let msg = Message(user: user, msg: text, timeStamp: Date())
+        let msg = Message(userId: user, msg: text, timeStamp: Date())
         
         let _ = try! firebaseReference(.Message).addDocument(from: msg) { (error) in
             

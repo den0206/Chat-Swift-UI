@@ -9,10 +9,20 @@ import SwiftUI
 
 struct MessageView: View {
     
+    @EnvironmentObject var userInfo : UserInfo
     @Binding var chatRoomId : String
     
     var body: some View {
-        Text(chatRoomId)
+        
+        VStack(spacing : 0) {
+            
+            
+            /// Text field
+            
+            Text(chatRoomId)
+        }
+        
+        
     }
 }
 

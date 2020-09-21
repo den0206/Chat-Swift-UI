@@ -12,7 +12,7 @@ struct UsersView: View {
 
     @State private var isSearchng = false
     @State private var searchText : String = ""
-    @Binding var selectedId : String
+    @Binding var chatRoomId : String
     @Binding var pushNav : Bool
     @Environment(\.presentationMode) var presentationMode
     @ObservedObject var vm : UsersViewModel = UsersViewModel()
@@ -30,11 +30,10 @@ struct UsersView: View {
                 List(vm.users, id : \.self) { user in
                     
                     Button(action: {
-                        self.selectedId = user.uid
+                        
+                        self.chatRoomId = startPrivateChat(currentUser: userInfo.user, user2: user)
                         self.presentationMode.wrappedValue.dismiss()
-                        
-                        /// create chatRoomId
-                        
+                                        
                         self.pushNav = true
 
                     }) {
