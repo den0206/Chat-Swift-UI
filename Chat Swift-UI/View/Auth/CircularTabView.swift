@@ -18,7 +18,7 @@ struct CircularTabView: View {
             ZStack {
                 switch index {
                 case 0 :
-                    MainView()
+                    RecentsView()
                     
                 default:
                     Color.white

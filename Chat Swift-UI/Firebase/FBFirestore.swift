@@ -109,4 +109,44 @@ enum FBFiresore {
         }
         
     }
+    
+    static func fetchRecents(userId : String, completion :  @escaping(Result<[Recent], Error>) -> Void) {
+        
+        var recents = [Recent]()
+        var counter = 0
+        
+        firebaseReference(.Recents).whereField(kUSERID, isEqualTo: userId).addSnapshotListener { (snapshot, error) in
+            
+            if let error = error {
+                completion(.failure(error))
+                return
+            }
+            
+            guard let snapshot = snapshot else {
+                completion(.failure(FirestoreError.noDocumentSNapshot))
+                return}
+            
+            guard !snapshot.isEmpty else {
+                completion(.failure(FirestoreError.emptySnapshot))
+                return}
+            
+            snapshot.documents.forEach { (doc) in
+                
+                let recent = Recent(dic: doc.data())
+                
+                if recent.lastMessage != "" {
+                    recents.append(recent)
+                }
+                
+                completion(.success(recents))
+                
+                
+                
+            }
+            
+       
+            
+        }
+        
+    }
 }

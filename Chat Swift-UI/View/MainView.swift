@@ -8,7 +8,7 @@
 import SwiftUI
 import Firebase
 
-struct MainView: View {
+struct RecentsView: View {
     
     @EnvironmentObject var userInfo : UserInfo
     @State private var showAlert = false
@@ -19,6 +19,7 @@ struct MainView: View {
     var body: some View {
         
         NavigationView {
+            
             
             VStack {
                 NavigationLink(destination: MessageView(chatRoomId: $chatRoomId), isActive: $pushNav) {

@@ -9,6 +9,49 @@ import Foundation
 import SwiftUI
 import FirebaseFirestore
 
+class Recent : Identifiable {
+    
+    var id : String
+    var userId : String
+    var chatRoomId : String
+    var memberIds : [String]
+    var withUserName : String
+    var withUserId : String
+    var withUserAvatar : String
+    var lastMessage : String
+    var counter : Int
+    var date : String
+    
+    init(dic : [String : Any]) {
+        
+        self.id = dic[kRECENTID] as? String ?? ""
+        self.userId = dic[kUSERID] as? String ?? ""
+        self.chatRoomId = dic[kCHATROOMID] as? String ?? ""
+        self.memberIds = dic[kMEMBERS] as? [String] ?? [String]()
+        self.withUserName = dic[kWITHUSERFULLNAME] as? String ?? ""
+        self.withUserId = dic[kWITHUSERUSERID ] as? String ?? ""
+        self.withUserAvatar = dic[kPROFILE_IMAGE] as? String ?? ""
+        self.lastMessage = dic[kLASTMESSAGE] as? String ?? ""
+        self.counter = dic[kCOUNTER] as? Int ?? 0
+        self.date = dic[kDATE] as? String ?? ""
+
+        
+    }
+    
+    
+//
+//    [kRECENTID : recentId,
+//               kUSERID : userId,
+//               kCHATROOMID : chatRoomId,
+//               kMEMBERS : userIds,
+//               kWITHUSERFULLNAME : withUser!.name,
+//               kWITHUSERUSERID : withUser!.uid,
+//               kPROFILE_IMAGE : withUser!.avatarString,
+//               kLASTMESSAGE : "",
+//               kCOUNTER : 0,
+//               kDATE : date
+}
+
 func startPrivateChat(currentUser : FBUser, user2 : FBUser) -> String {
     let currentUID = currentUser.uid
     let user2Id = user2.uid
@@ -63,7 +106,8 @@ func createRecentToFireStore(userId : String, currentUID : String,chatRoomId : S
     
     var withUser : FBUser?
     
-    
+    let date = dateFormatter().string(from: Date())
+
 
     if users != nil && users!.count > 0 {
         
@@ -83,7 +127,7 @@ func createRecentToFireStore(userId : String, currentUID : String,chatRoomId : S
               kPROFILE_IMAGE : withUser!.avatarString,
               kLASTMESSAGE : "",
               kCOUNTER : 0,
-              kDATE : Timestamp(date: Date())
+              kDATE : date
              
    ] as [String : Any]
     
