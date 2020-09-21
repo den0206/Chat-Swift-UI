@@ -178,6 +178,7 @@
 			isa = PBXGroup;
 			children = (
 				3ACB76AD251239660016F17C /* Auth */,
+				3ACBEC522517285500DB127A /* CircularTabView.swift */,
 				3AE9E7552513800300AD001D /* RecentsView.swift */,
 				3A89694A2517344F00450B49 /* UsersView.swift */,
 				3A484CEA2517949A004500C1 /* MessageView.swift */,
@@ -191,7 +192,6 @@
 		3ACB76AD251239660016F17C /* Auth */ = {
 			isa = PBXGroup;
 			children = (
-				3ACBEC522517285500DB127A /* CircularTabView.swift */,
 				3ACB76AE251239780016F17C /* LoginView.swift */,
 				3A2E85B82515A7DF00F66910 /* SignInWithEmailView .swift */,
 				3ACB76B3251242C40016F17C /* SignUpView.swift */,
@@ -207,8 +207,8 @@
 				3A2E85B42515A28500F66910 /* UserViewModel.swift */,
 				3A89694E25173C0000450B49 /* UsersViewModel.swift */,
 				3ACB76B125123F190016F17C /* AuthViewModel.swift */,
-				3AB34FFF2518526500F47796 /* MessageViewModel.swift */,
 				3A29E8B72518774500BCFEF8 /* RecentsViewModel.swift */,
+				3AB34FFF2518526500F47796 /* MessageViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";

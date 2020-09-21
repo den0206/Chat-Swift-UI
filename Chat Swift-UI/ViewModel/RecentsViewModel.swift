@@ -7,27 +7,75 @@
 
 import Foundation
 
+enum RecentViewAlert {
+    case logOut
+    case errorMessage
+}
 class RecentsViewModel : ObservableObject {
     
     @Published var showAlert = false
+    @Published var alertType : RecentViewAlert = .logOut
     @Published var showModel = false
     @Published var chatRoomId = ""
     @Published var pushNav = false
+    @Published var errorMessage = ""
     
     @Published var recents = [Recent]()
     
     func fetchRecents(userId : String) {
-        
-        FBFiresore.fetchRecents(userId: userId) { (result) in
+  
+        firebaseReference(.Recents).whereField(kUSERID, isEqualTo: userId).order(by: kDATE, descending: true).addSnapshotListener { (snapshot, error) in
             
-            switch result {
-            
-            case .success(let recents):
-                self.recents = recents
-                print(recents.count)
-            case .failure(let error):
-                print(error.localizedDescription)
+            if let error = error {
+                self.alertType = .errorMessage
+                self.errorMessage = error.localizedDescription
+                self.showAlert = true
+                return
             }
+            guard let snapshot = snapshot else {return}
+            
+            guard !snapshot.isEmpty else {
+                self.alertType = .errorMessage
+                self.errorMessage = "Not found Recents"
+                self.showAlert = true
+                return
+            }
+            
+            snapshot.documentChanges.forEach { (diff) in
+                
+                switch diff.type {
+                
+                case .added:
+                    
+                    let recent = Recent(dic: diff.document.data())
+                    
+                    if recent.lastMessage != "" {
+                        self.recents.append( recent)
+                    }
+                    
+                case .modified:
+                    
+                    let changeId = diff.document.documentID
+                    
+                    let changeRecent = Recent(dic: diff.document.data())
+                    
+                    for i in 0..<self.recents.count {
+                        
+                        if self.recents[i].id == changeId {
+                            self.recents[i] = changeRecent
+
+                        } else {
+                            if changeRecent.lastMessage != "" {
+                                self.recents.append(changeRecent)
+                            }
+                        }
+                    }
+                case .removed:
+                    return
+                }
+            }
+            
+            
         }
         
     }

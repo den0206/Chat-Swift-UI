@@ -10,6 +10,7 @@ import SwiftUI
 struct CircularTabView: View {
     
     @State private var index = 0
+    @State private var showTab = true
     
     
     var body: some View {
@@ -18,7 +19,7 @@ struct CircularTabView: View {
             ZStack {
                 switch index {
                 case 0 :
-                    RecentsView()
+                    RecentsView(showTab : $showTab)
                     
                 default:
                     Color.white
@@ -26,8 +27,11 @@ struct CircularTabView: View {
                 }
             }
             
-            CircularTab(index: $index)
-                .frame(height: 70)
+            if showTab {
+                CircularTab(index: $index)
+                    .frame(height: 70)
+            }
+            
         }
         .edgesIgnoringSafeArea(.bottom)
     }

@@ -10,7 +10,9 @@ import SwiftUI
 struct MessageView: View {
     
     @EnvironmentObject var userInfo : UserInfo
+    @StateObject var vm : MessageViewModel = MessageViewModel()
     @Binding var chatRoomId : String
+    @Binding var showTab : Bool
     
     var body: some View {
         
@@ -21,6 +23,14 @@ struct MessageView: View {
             
             Text(chatRoomId)
         }
+        .onAppear {
+            self.showTab = false
+        }
+        .onDisappear {
+            
+            self.showTab = true
+        }
+      
         
         
     }

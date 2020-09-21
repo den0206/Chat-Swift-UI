@@ -11,12 +11,10 @@ import Firebase
 struct RecentsView: View {
     
     @EnvironmentObject var userInfo : UserInfo
-    @ObservedObject var vm : RecentsViewModel = RecentsViewModel()
-    //    @State private var showAlert = false
-    //    @State private var showModel = false
-    //    @State private var chatRoomId = ""
-    //    @State private var pushNav = false
-    
+    @StateObject var vm : RecentsViewModel = RecentsViewModel()
+    @State private var didAppear = false
+    @Binding var showTab : Bool
+ 
     var body: some View {
         
         NavigationView {
@@ -24,11 +22,12 @@ struct RecentsView: View {
             ScrollView {
                 ForEach(vm.recents) { recent in
                     
-                    NavigationLink(destination: MessageView(chatRoomId: $vm.chatRoomId), isActive: $vm.pushNav) {
+                    NavigationLink(destination: MessageView(chatRoomId: $vm.chatRoomId, showTab: $showTab), isActive: $vm.pushNav) {
                         
                         RecentCell(recent: recent)
                             .onTapGesture {
                                 self.vm.chatRoomId = recent.chatRoomId
+                                self.showTab = false
                                 self.vm.pushNav = true
                             }
                     }
@@ -38,7 +37,7 @@ struct RecentsView: View {
             }
             .navigationBarTitle("Chat", displayMode : .inline)
             .navigationBarItems(leading: Button(action: {
-                
+                self.vm.alertType = .logOut
                 self.vm.showAlert = true
             }, label: {
                 if userInfo.user.avatarString != "" {
@@ -67,20 +66,27 @@ struct RecentsView: View {
             })
             .alert(isPresented: $vm.showAlert, content: { () -> Alert in
                 
-                Alert(title: Text("LogOut"), message: Text("ログアウトしますか？"), primaryButton: .cancel(Text("キャンセル")), secondaryButton: .destructive(Text("ログアウト"), action: {
-                    
-                    FBAuth.logOut { (result) in
+                switch vm.alertType {
+                
+                case .logOut:
+                    return Alert(title: Text("LogOut"), message: Text("ログアウトしますか？"), primaryButton: .cancel(Text("キャンセル")), secondaryButton: .destructive(Text("ログアウト"), action: {
                         
-                        switch result {
-                        
-                        case .success(_):
-                            self.userInfo.isUserAuthenTicated = .signedOut
+                        FBAuth.logOut { (result) in
                             
-                        case .failure(let error):
-                            print(error.localizedDescription)
+                            switch result {
+                            
+                            case .success(_):
+                                self.userInfo.isUserAuthenTicated = .signedOut
+                                
+                            case .failure(let error):
+                                print(error.localizedDescription)
+                            }
                         }
-                    }
-                }))
+                    }))
+                case .errorMessage:
+                    return Alert(title: Text("Error"), message: Text(vm.errorMessage), dismissButton: .default(Text("OK")))
+                }
+                
             })
             .onAppear {
                 guard let uid = Auth.auth().currentUser?.uid else {return}
@@ -94,7 +100,9 @@ struct RecentsView: View {
                     }
                 }
                 
+                guard !didAppear else {return}
                 vm.fetchRecents(userId: uid)
+                self.didAppear = true
                 
             }
         }
