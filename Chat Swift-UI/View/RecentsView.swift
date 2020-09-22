@@ -22,11 +22,12 @@ struct RecentsView: View {
             ScrollView {
                 ForEach(vm.recents) { recent in
                     
-                    NavigationLink(destination: MessageView(chatRoomId: $vm.chatRoomId, showTab: $showTab), isActive: $vm.pushNav) {
+                    NavigationLink(destination: MessageView(chatRoomId: $vm.chatRoomId, memberIds: $vm.memberIds, showTab: $showTab), isActive: $vm.pushNav) {
                         
                         RecentCell(recent: recent)
                             .onTapGesture {
                                 self.vm.chatRoomId = recent.chatRoomId
+                                self.vm.memberIds = [userInfo.user.uid, recent.withUserId]
                                 self.showTab = false
                                 self.vm.pushNav = true
                             }
@@ -62,7 +63,7 @@ struct RecentsView: View {
                         .font(.system(size: 22))
                 }))
             .sheet(isPresented: $vm.showModel, content: {
-                UsersView(chatRoomId: $vm.chatRoomId, pushNav : $vm.pushNav)
+                UsersView(chatRoomId: $vm.chatRoomId, membserIds: $vm.memberIds, pushNav : $vm.pushNav)
             })
             .alert(isPresented: $vm.showAlert, content: { () -> Alert in
                 

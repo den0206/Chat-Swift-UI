@@ -30,7 +30,9 @@ struct CircularTabView: View {
             if showTab {
                 CircularTab(index: $index)
                     .frame(height: 70)
+                    
             }
+        
             
         }
         .edgesIgnoringSafeArea(.bottom)

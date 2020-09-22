@@ -17,6 +17,7 @@ class RecentsViewModel : ObservableObject {
     @Published var alertType : RecentViewAlert = .logOut
     @Published var showModel = false
     @Published var chatRoomId = ""
+    @Published var memberIds = [String]()
     @Published var pushNav = false
     @Published var errorMessage = ""
     

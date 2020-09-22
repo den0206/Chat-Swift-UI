@@ -13,6 +13,7 @@ struct UsersView: View {
     @State private var isSearchng = false
     @State private var searchText : String = ""
     @Binding var chatRoomId : String
+    @Binding var membserIds : [String]
     @Binding var pushNav : Bool
     @Environment(\.presentationMode) var presentationMode
     @ObservedObject var vm : UsersViewModel = UsersViewModel()
@@ -32,6 +33,7 @@ struct UsersView: View {
                     Button(action: {
                         
                         self.chatRoomId = startPrivateChat(currentUser: userInfo.user, user2: user)
+                        self.membserIds = [userInfo.user.uid, user.uid]
                         self.presentationMode.wrappedValue.dismiss()
                                         
                         self.pushNav = true
