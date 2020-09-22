@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 enum RecentViewAlert {
     case logOut
@@ -18,6 +19,7 @@ class RecentsViewModel : ObservableObject {
     @Published var showModel = false
     @Published var chatRoomId = ""
     @Published var memberIds = [String]()
+    @Published var withUserAvatar : UIImage = .init()
     @Published var pushNav = false
     @Published var errorMessage = ""
     

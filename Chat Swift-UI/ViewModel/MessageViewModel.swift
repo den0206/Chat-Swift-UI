@@ -12,9 +12,40 @@ class MessageViewModel : ObservableObject {
     
     @Published var text = ""
     @Published var messages = [Message]()
+ 
     
-    
-    func fetchMessage(chatRoomId : String) {
+    func loadMessage(chatRoomId : String, userId : String) {
+        
+        firebaseReference(.Message).document(userId).collection(chatRoomId).addSnapshotListener { (snapshot, error) in
+            
+            if error != nil {
+                print(error!.localizedDescription)
+                return
+            }
+            
+            guard let snapshot = snapshot else {return}
+            
+            guard !snapshot.isEmpty else {print("Empty") ; return}
+            
+            snapshot.documentChanges.forEach { (doc) in
+                
+                switch doc.type {
+                
+                case .added:
+                    let message = try! doc.document.data(as: Message.self)
+                    
+                    DispatchQueue.main.async {
+                        self.messages.append(message!)
+                        print(self.messages.count)
+                    }
+                default :
+                    return
+                }
+            }
+            
+            
+        }
+        
         
     }
     

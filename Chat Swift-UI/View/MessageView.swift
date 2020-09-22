@@ -13,15 +13,29 @@ struct MessageView: View {
     @StateObject var vm : MessageViewModel = MessageViewModel()
     @Binding var chatRoomId : String
     @Binding var memberIds : [String]
+    @Binding var withUserAvatar : UIImage
     @Binding var showTab : Bool
     
     var body: some View {
         
         VStack(spacing : 0) {
             
-            ForEach(memberIds, id : \.self) { id in
-                Text(id)
-                
+            
+            ScrollViewReader { reader in
+
+                ScrollView {
+
+                    VStack(spacing : 15) {
+
+                        ForEach(vm.messages) { message in
+                            
+                            MessageCell(message: message, currentId: userInfo.user.uid, withUserAvatar: withUserAvatar)
+
+                        }
+                    }
+                    .padding(.vertical)
+                }
+
             }
             /// Text field
             MGTextField(text: $vm.text, sendAction: {vm.sendMessage(chatRoomId : chatRoomId, memberIds: memberIds, senderId: userInfo.user.uid)})
@@ -29,6 +43,7 @@ struct MessageView: View {
         }
         .onAppear {
             self.showTab = false
+            self.vm.loadMessage(chatRoomId: chatRoomId, userId: userInfo.user.uid)
         }
         .onDisappear {
             
@@ -37,6 +52,59 @@ struct MessageView: View {
       
         
         
+    }
+}
+
+/// Message Cell
+
+struct MessageCell : View {
+    var message : Message
+    var currentId : String
+    var withUserAvatar : UIImage
+
+    var body: some View {
+        
+        HStack(spacing : 15) {
+            
+            if message.userId != currentId {
+                AvatarView(withUserAvatar: withUserAvatar)
+            } else {
+                Spacer(minLength: 0)
+            }
+            
+            VStack(alignment: message.userId == currentId ? .trailing : .leading , spacing: 5) {
+                
+                Text(message.msg)
+                    .fontWeight(.bold)
+                    .foregroundColor(.white)
+                    .padding()
+                    .background(message.userId == currentId ? Color.green : Color.gray)
+                     /// tail
+                    .clipShape(ChatBubble(myMessage: message.userId == currentId))
+                
+                Text(message.timeStamp, style: .time)
+                    .font(.caption2)
+                    .foregroundColor(.gray)
+                    .padding(message.userId != currentId ? .trailing : .leading, 10)
+            }
+        }
+        .padding(.horizontal, 15)
+        .id(message.id)
+        
+        
+    }
+}
+
+struct AvatarView : View {
+    
+    var withUserAvatar : UIImage
+
+    var body: some View {
+        
+        Image(uiImage: withUserAvatar)
+            .resizable()
+            .frame(width: 50, height: 50)
+            .clipShape(Circle())
     }
 }
 
@@ -63,7 +131,7 @@ struct MGTextField : View {
                         .background(Color.green)
                         .clipShape(Circle())
                 }
-                .padding(.horizontal)
+                .padding(.trailing, 5)
             }
             
             

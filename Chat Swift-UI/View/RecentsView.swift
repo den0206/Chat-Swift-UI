@@ -22,12 +22,13 @@ struct RecentsView: View {
             ScrollView {
                 ForEach(vm.recents) { recent in
                     
-                    NavigationLink(destination: MessageView(chatRoomId: $vm.chatRoomId, memberIds: $vm.memberIds, showTab: $showTab), isActive: $vm.pushNav) {
+                    NavigationLink(destination: MessageView(chatRoomId: $vm.chatRoomId, memberIds: $vm.memberIds, withUserAvatar: $vm.withUserAvatar, showTab: $showTab), isActive: $vm.pushNav) {
                         
                         RecentCell(recent: recent)
                             .onTapGesture {
                                 self.vm.chatRoomId = recent.chatRoomId
                                 self.vm.memberIds = [userInfo.user.uid, recent.withUserId]
+                                self.vm.withUserAvatar = downloadImageFromData(picturedata: recent.withUserAvatar)!
                                 self.showTab = false
                                 self.vm.pushNav = true
                             }
@@ -117,7 +118,7 @@ struct RecentsView: View {
 struct RecentCell : View {
     
     var recent : Recent
-    
+   
     var body: some View {
         
         VStack {

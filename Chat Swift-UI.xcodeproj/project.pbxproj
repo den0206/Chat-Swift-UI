@@ -182,8 +182,8 @@
 				3AE9E7552513800300AD001D /* RecentsView.swift */,
 				3A89694A2517344F00450B49 /* UsersView.swift */,
 				3A484CEA2517949A004500C1 /* MessageView.swift */,
-				3A52AC61250E41A500997131 /* HomeView.swift */,
 				3A47ADB4250E4CFF00CF3E15 /* ChatCell.swift */,
+				3A52AC61250E41A500997131 /* HomeView.swift */,
 				3AB27EC125111A24000646DC /* exRecentsView.swift */,
 			);
 			path = View;
