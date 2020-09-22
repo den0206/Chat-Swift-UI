@@ -32,6 +32,10 @@ struct MessageView: View {
                             MessageCell(message: message, currentId: userInfo.user.uid, withUserAvatar: withUserAvatar)
 
                         }
+                        .onChange(of: vm.messages) { (value) in
+                            /// scroll to bottom get New Chat
+                            reader.scrollTo(vm.messages.last?.id, anchor: .bottom)
+                        }
                     }
                     .padding(.vertical)
                 }
@@ -86,6 +90,12 @@ struct MessageCell : View {
                     .font(.caption2)
                     .foregroundColor(.gray)
                     .padding(message.userId != currentId ? .trailing : .leading, 10)
+            }
+            
+            if message.userId == currentId {
+                /// currentUser Avatar
+            } else {
+                Spacer(minLength: 0)
             }
         }
         .padding(.horizontal, 15)

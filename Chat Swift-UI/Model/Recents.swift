@@ -37,19 +37,6 @@ class Recent : Identifiable {
 
         
     }
-    
-    
-//
-//    [kRECENTID : recentId,
-//               kUSERID : userId,
-//               kCHATROOMID : chatRoomId,
-//               kMEMBERS : userIds,
-//               kWITHUSERFULLNAME : withUser!.name,
-//               kWITHUSERUSERID : withUser!.uid,
-//               kPROFILE_IMAGE : withUser!.avatarString,
-//               kLASTMESSAGE : "",
-//               kCOUNTER : 0,
-//               kDATE : date
 }
 
 func startPrivateChat(currentUser : FBUser, user2 : FBUser) -> String {
@@ -134,4 +121,30 @@ func createRecentToFireStore(userId : String, currentUID : String,chatRoomId : S
     localReference.setData(recent)
     
     
+}
+
+func updateRecent(chatRoomId : String, lastMessage : String, currentId : String) {
+    firebaseReference(.Recents).whereField(kCHATROOMID, isEqualTo: chatRoomId).getDocuments { (snapshot, error) in
+        
+        guard let snapshot = snapshot else {return}
+        
+        guard !snapshot.isEmpty else {return}
+        
+        for recent in snapshot.documents {
+            let currentRecent = recent.data()
+            
+            let date = dateFormatter().string(from: Date())
+            var counter = currentRecent[kCOUNTER] as! Int
+            
+            if currentRecent[kUSERID] as! String != currentId {
+                counter += 1
+            }
+            
+            let values = [kLASTMESSAGE : lastMessage,
+                          kCOUNTER: counter,
+                          kDATE : date] as [String : Any]
+            
+            firebaseReference(.Recents).document(recent[kRECENTID] as! String).updateData(values)
+        }
+    }
 }

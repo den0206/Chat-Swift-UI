@@ -66,12 +66,15 @@ class RecentsViewModel : ObservableObject {
                         
                         if self.recents[i].id == changeId {
                             self.recents[i] = changeRecent
-
-                        } else {
-                            if changeRecent.lastMessage != "" {
+                            self.recents.sort(by: {$0.date > $1.date})
+                        }
+                        
+                        if changeRecent.lastMessage != "" {
+                            if !self.recents.contains(where: {return $0.id == changeRecent.id }) {
                                 self.recents.append(changeRecent)
                             }
                         }
+                        
                     }
                 case .removed:
                     return
