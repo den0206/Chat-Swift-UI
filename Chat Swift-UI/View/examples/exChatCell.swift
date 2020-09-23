@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ChatCell: View {
+struct exChatCell: View {
     
     var message : Message
     @AppStorage("current_user") var user = ""

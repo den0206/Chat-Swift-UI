@@ -11,6 +11,7 @@ struct MessageView: View {
     
     @EnvironmentObject var userInfo : UserInfo
     @StateObject var vm : MessageViewModel = MessageViewModel()
+    var scrolled = false
     @Binding var chatRoomId : String
     @Binding var memberIds : [String]
     @Binding var withUserAvatar : UIImage
@@ -30,6 +31,13 @@ struct MessageView: View {
                         ForEach(vm.messages) { message in
                             
                             MessageCell(message: message, currentId: userInfo.user.uid, withUserAvatar: withUserAvatar)
+                                .onAppear {
+                                    /// scroll when FirstLoad
+                                    
+                                    if message.id == self.vm.messages.last?.id && !scrolled {
+                                        reader.scrollTo(vm.messages.last?.id, anchor: .bottom)
+                                    }
+                                }
 
                         }
                         .onChange(of: vm.messages) { (value) in

@@ -39,8 +39,8 @@ struct RecentsView: View {
             }
             .navigationBarTitle("Chat", displayMode : .inline)
             .navigationBarItems(leading: Button(action: {
-                self.vm.alertType = .logOut
-                self.vm.showAlert = true
+                self.vm.modelType = .Edit
+                self.vm.showModel = true
             }, label: {
                 if userInfo.user.avatarString != "" {
                     Image(uiImage: downloadImageFromData(picturedata: userInfo.user.avatarString)!)
@@ -57,6 +57,7 @@ struct RecentsView: View {
                 
             }), trailing:
                 Button(action: {
+                    self.vm.modelType = .Users
                     self.vm.showModel = true
                 }, label: {
                     Image(systemName: "plus")
@@ -64,7 +65,14 @@ struct RecentsView: View {
                         .font(.system(size: 22))
                 }))
             .sheet(isPresented: $vm.showModel, content: {
-                UsersView(chatRoomId: $vm.chatRoomId, membserIds: $vm.memberIds, pushNav : $vm.pushNav)
+                
+                switch vm.modelType {
+                case .Users :
+                    UsersView(chatRoomId: $vm.chatRoomId, membserIds: $vm.memberIds, pushNav : $vm.pushNav)
+                case .Edit :
+                    UserEditView()
+
+                }
             })
             .alert(isPresented: $vm.showAlert, content: { () -> Alert in
                 
@@ -78,6 +86,7 @@ struct RecentsView: View {
                             switch result {
                             
                             case .success(_):
+                               
                                 self.userInfo.isUserAuthenTicated = .signedOut
                                 
                             case .failure(let error):

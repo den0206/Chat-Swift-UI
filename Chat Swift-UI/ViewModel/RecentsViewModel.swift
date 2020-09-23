@@ -12,10 +12,17 @@ enum RecentViewAlert {
     case logOut
     case errorMessage
 }
+
+enum ModelType {
+    case Users
+    case Edit
+}
+
 class RecentsViewModel : ObservableObject {
     
     @Published var showAlert = false
     @Published var alertType : RecentViewAlert = .logOut
+    @Published var modelType : ModelType = .Users
     @Published var showModel = false
     @Published var chatRoomId = ""
     @Published var memberIds = [String]()

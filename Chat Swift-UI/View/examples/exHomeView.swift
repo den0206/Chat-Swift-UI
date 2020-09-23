@@ -8,7 +8,7 @@
 import SwiftUI
 import Firebase
 
-struct HomeView: View {
+struct exHomeView: View {
     
     @StateObject var vm = HomeViewModel()
     @AppStorage("current_user") var user = ""
@@ -40,7 +40,7 @@ struct HomeView: View {
                     
                     VStack(spacing : 15) {
                         ForEach(vm.messages) { message in
-                            ChatCell(message: message)
+                            exChatCell(message: message)
                                 .onAppear {
                                     /// scroll Bottom when FirstLoad
                                     
