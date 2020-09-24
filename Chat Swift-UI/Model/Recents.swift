@@ -21,6 +21,7 @@ class Recent : Identifiable {
     var lastMessage : String
     var counter : Int
     var date : String
+    var offSet : CGFloat = 0
     
     init(dic : [String : Any]) {
         
