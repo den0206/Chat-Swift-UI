@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import MLKit
 
 
 struct UserEditView: View {
@@ -13,7 +14,7 @@ struct UserEditView: View {
     @EnvironmentObject var userInfo : UserInfo
     @Environment(\.presentationMode) var presentationMode
     @State private var showAlert = false
-
+    @State private var langage : TranslateLanguage = TranslateLanguage.japanese
 
     var body: some View {
         
@@ -84,12 +85,9 @@ struct UserEditView: View {
             }
             
             Spacer(minLength: 0)
+            
+            LangagePicker(selectrdLangage: $langage)
         }
     }
 }
 
-struct UserEditView_Previews: PreviewProvider {
-    static var previews: some View {
-        UserEditView()
-    }
-}

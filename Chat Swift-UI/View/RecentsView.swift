@@ -18,7 +18,7 @@ struct RecentsView: View {
     var body: some View {
         
         NavigationView {
-            
+        
             ScrollView(.vertical, showsIndicators: false) {
                 
                 LazyVStack(alignment: .leading, spacing: 0) {
@@ -26,6 +26,7 @@ struct RecentsView: View {
                         
                         ZStack {
                             
+                            /// swipe background
                             HStack {
                                 Color.green.frame(width: 90)
                                     .opacity(recent.offSet > 0 ? 1 : 0 )
@@ -37,7 +38,7 @@ struct RecentsView: View {
                             }
                             .animation(.default)
                            
-                            
+                            /// swipe Buttons
                             HStack {
                                 /// favorite Action
                                 Button(action: {
@@ -254,12 +255,8 @@ struct RecentCell : View {
         }
             .padding(.all)
             .foregroundColor(.black)
-            .padding(.top, 20)
             .background(Color.white)
 
-            
-        
-        
 
     }
 }

@@ -29,6 +29,7 @@
 		3AB27EC225111A24000646DC /* exRecentsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AB27EC125111A24000646DC /* exRecentsView.swift */; };
 		3AB27EC425111BE3000646DC /* Global Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AB27EC325111BE3000646DC /* Global Extensions.swift */; };
 		3AB350002518526500F47796 /* MessageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AB34FFF2518526500F47796 /* MessageViewModel.swift */; };
+		3ABA96C9251E43A9008826B1 /* LangagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ABA96C8251E43A9008826B1 /* LangagePicker.swift */; };
 		3AC77470251B912A00C0576F /* UserEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AC7746F251B912A00C0576F /* UserEditView.swift */; };
 		3ACB76AF251239780016F17C /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ACB76AE251239780016F17C /* LoginView.swift */; };
 		3ACB76B225123F190016F17C /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ACB76B125123F190016F17C /* AuthViewModel.swift */; };
@@ -72,6 +73,7 @@
 		3AB27EC125111A24000646DC /* exRecentsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = exRecentsView.swift; sourceTree = "<group>"; };
 		3AB27EC325111BE3000646DC /* Global Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Global Extensions.swift"; sourceTree = "<group>"; };
 		3AB34FFF2518526500F47796 /* MessageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageViewModel.swift; sourceTree = "<group>"; };
+		3ABA96C8251E43A9008826B1 /* LangagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LangagePicker.swift; sourceTree = "<group>"; };
 		3AC7746F251B912A00C0576F /* UserEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserEditView.swift; sourceTree = "<group>"; };
 		3ACB76AE251239780016F17C /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		3ACB76B125123F190016F17C /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
@@ -186,6 +188,7 @@
 				3A89694A2517344F00450B49 /* UsersView.swift */,
 				3A484CEA2517949A004500C1 /* MessageView.swift */,
 				3AC7746F251B912A00C0576F /* UserEditView.swift */,
+				3ABA96C8251E43A9008826B1 /* LangagePicker.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -265,6 +268,7 @@
 				3A52AC4B250E418700997131 /* Frameworks */,
 				3A52AC4C250E418700997131 /* Resources */,
 				325C161593685590A19094F8 /* [CP] Embed Pods Frameworks */,
+				D99949B0DAA92ACCC92D2825 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -360,6 +364,23 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		D99949B0DAA92ACCC92D2825 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Chat Swift-UI/Pods-Chat Swift-UI-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Chat Swift-UI/Pods-Chat Swift-UI-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Chat Swift-UI/Pods-Chat Swift-UI-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -392,6 +413,7 @@
 				3A89694B2517344F00450B49 /* UsersView.swift in Sources */,
 				3AE9E75425137B1800AD001D /* Constants.swift in Sources */,
 				3AB27EC425111BE3000646DC /* Global Extensions.swift in Sources */,
+				3ABA96C9251E43A9008826B1 /* LangagePicker.swift in Sources */,
 				3AB350002518526500F47796 /* MessageViewModel.swift in Sources */,
 				3A89694F25173C0000450B49 /* UsersViewModel.swift in Sources */,
 				3A47ADB0250E468300CF3E15 /* Message.swift in Sources */,
