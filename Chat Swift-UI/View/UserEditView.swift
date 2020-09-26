@@ -18,7 +18,7 @@ struct UserEditView: View {
 
     var body: some View {
         
-        VStack {
+        ScrollView(.vertical, showsIndicators: false) {
             
             HStack {
                 Spacer(minLength: 0)
@@ -83,10 +83,14 @@ struct UserEditView: View {
                     }
                 }))
             }
+        
+            
+            LangagePicker(selectrdLangage: $langage)
+                .padding(.top,20)
+                .frame(width: UIScreen.main.bounds.width - 30)
             
             Spacer(minLength: 0)
             
-            LangagePicker(selectrdLangage: $langage)
         }
     }
 }

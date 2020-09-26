@@ -15,6 +15,8 @@ struct LangagePicker: View {
     
     var body: some View {
         
+        Text(selectrdLangage.title)
+            .font(.title2)
         
         VStack(spacing : 10) {
             Picker("", selection: $selectrdLangage) {
@@ -25,13 +27,9 @@ struct LangagePicker: View {
                 }
                 
             }
-            
-            Text(selectrdLangage.title)
-                .font(.title2)
+ 
         }
-        
-        
-       
+
     }
 }
 
@@ -84,7 +82,7 @@ extension TranslateLanguage {
         case .dutch: return "Dutch"
         case .norwegian: return "Norwegian"
         case .polish: return "Polish"
-        case .polish: return "Portuguese"
+        case .portuguese: return "Portuguese"
         case .romanian: return "Romanian"
         case .russian: return "Russian"
         case .slovak: return "Slovak"

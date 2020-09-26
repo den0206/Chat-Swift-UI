@@ -21,6 +21,9 @@ struct CircularTabView: View {
                 case 0 :
                     RecentsView(showTab : $showTab)
                     
+                case 2:
+                    DownloadLangageView()
+                    
                 default:
                     Color.white
                     Text("No Index")
@@ -48,15 +51,15 @@ struct CircularTab : View {
         HStack {
             
                 
-            tabButton(function: {index = 0}, imageName: "house", title: "Home", number: 0, index: index)
+            tabButton(function: {index = 0}, systemImageName: "house", title: "Home", number: 0, index: index)
             
             Spacer(minLength: 15)
             
-            tabButton(function: {index = 1}, imageName: "magnifyingglass", title: "Search", number: 1, index: index)
+            tabButton(function: {index = 1}, systemImageName: "magnifyingglass", title: "Search", number: 1, index: index)
             
             Spacer(minLength: 15)
             
-            tabButton(function: {index = 2}, imageName: "person", title: "profile", number: 2, index: index)
+            tabButton(function: {index = 2}, imageName: "translation", title: "Langages", number: 2, index: index)
             
         }
         .padding(.top,-10)
@@ -68,28 +71,59 @@ struct CircularTab : View {
 
 struct tabButton : View {
     var function : ()->Void
-    var imageName : String
+    var systemImageName : String? = nil
+    var imageName : String? = nil
     var title : String
     var number : Int
     var index : Int
     
+    var picimage : Image {
+        return systemImageName != nil ? Image(systemName: systemImageName!) : Image(imageName!)
+    }
     var body: some View {
         VStack {
-            
             Button(action: {self.function()}) {
                 if index != number {
-                    Image(systemName: imageName)
-                        .font(.system(size: 22))
-                        .foregroundColor(.gray)
+                    
+                    if systemImageName != nil {
+                        Image(systemName: systemImageName!)
+                            .font(.system(size: 22))
+                            .foregroundColor(.gray)
+                        
+                    } else {
+                        Image(imageName!)
+                            .resizable()
+                            .renderingMode(.template)
+                            .foregroundColor(.gray)
+                            .frame(width: 30, height: 30)
+                    }
+                  
+                       
                 } else {
-                    Image(systemName: imageName)
-                        .frame(width: 25, height: 23)
-                        .foregroundColor(.white)
-                        .padding()
-                        .background(Color.green)
-                        .clipShape(Circle())
-                        .offset(y : -20)
-                        .padding(.bottom, 30)
+                    if systemImageName != nil {
+                        Image(systemName: systemImageName!)
+                            .frame(width: 25, height: 23)
+                            .foregroundColor(.white)
+                            .padding()
+                            .background(Color.green)
+                            .clipShape(Circle())
+                            .offset(y : -20)
+                            .padding(.bottom, 30)
+                    } else {
+                        Image(imageName!)
+                            .resizable()
+                            .renderingMode(.template)
+                            .foregroundColor(.white)
+                            .frame(width: 30, height: 30)
+                            .padding()
+                            .background(Color.green)
+                            .clipShape(Circle())
+                            .offset(y : -20)
+                            .padding(.bottom, 30)
+                            
+                    }
+                
+                       
                     
                     Text(title)
                         .foregroundColor(Color.black.opacity(0.8))
