@@ -14,7 +14,7 @@ struct UserEditView: View {
     @EnvironmentObject var userInfo : UserInfo
     @Environment(\.presentationMode) var presentationMode
     @State private var showAlert = false
-    @State private var langage : TranslateLanguage = TranslateLanguage.japanese
+  
 
     var body: some View {
         
@@ -85,7 +85,7 @@ struct UserEditView: View {
             }
         
             
-            LangagePicker(selectrdLangage: $langage)
+            LangagePicker(selectrdLangage: $userInfo.user.lang)
                 .padding(.top,20)
                 .frame(width: UIScreen.main.bounds.width - 30)
             

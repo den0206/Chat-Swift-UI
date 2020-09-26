@@ -85,17 +85,16 @@ struct UserCell : View {
                     .clipShape(Circle())
             }
          
-            
-            VStack(alignment:.leading, spacing: 12) {
+             
+            HStack {
                 Text(user.name)
                     .fontWeight(.bold)
                     .font(.system(size: 24))
                 
-                Text(user.uid)
+                Text("(\(user.lang.title))")
                     .font(.caption2)
-             
             }
-            
+     
             Spacer()
             
         }

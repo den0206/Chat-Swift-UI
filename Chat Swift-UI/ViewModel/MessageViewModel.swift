@@ -7,6 +7,7 @@
 
 import Foundation
 import Firebase
+import MLKit
 
 class MessageViewModel : ObservableObject {
     
@@ -51,27 +52,48 @@ class MessageViewModel : ObservableObject {
     
     func sendMessage(chatRoomId : String, memberIds : [String], senderId : String) {
         
-        let message = Message(userId: senderId, msg: text, timeStamp: Date())
+        let options = TranslatorOptions(sourceLanguage: .japanese, targetLanguage: .english)
+      
         
-        for id in memberIds {
+        let translater = Translator.translator(options: options)
+        
+        guard ModelManager.modelManager().isModelDownloaded(TranslateRemoteModel.translateRemoteModel(language: .japanese)) && ModelManager.modelManager().isModelDownloaded(TranslateRemoteModel.translateRemoteModel(language: .english)) else {
             
-            do {
-                let _ = try firebaseReference(.Message).document(id).collection(chatRoomId).addDocument(from: message)
-
-                
-            } catch(let error) {
-                print(error.localizedDescription)
+            print("Not yet download")
+            return
+        }
+        
+        translater.translate(text) { (result, error) in
+            
+            if error != nil {
+                print(error!.localizedDescription)
                 return
             }
             
-
+            print(result)
         }
         
-        updateRecent(chatRoomId: chatRoomId, lastMessage: text, currentId: senderId)
-        
-        text = ""
-        
-        
+//        let message = Message(userId: senderId, msg: text, timeStamp: Date())
+//
+//        for id in memberIds {
+//
+//            do {
+//                let _ = try firebaseReference(.Message).document(id).collection(chatRoomId).addDocument(from: message)
+//
+//
+//            } catch(let error) {
+//                print(error.localizedDescription)
+//                return
+//            }
+//
+//
+//        }
+//
+//        updateRecent(chatRoomId: chatRoomId, lastMessage: text, currentId: senderId)
+//
+//        text = ""
+//
+//
         
     }
     

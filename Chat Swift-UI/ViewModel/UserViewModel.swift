@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import MLKit
 
 struct UserViewModel {
     var email = ""
@@ -13,6 +14,7 @@ struct UserViewModel {
     var fullname = ""
     var confirmPassword = ""
     var imageData : Data = .init(count : 0)
+    var language : TranslateLanguage = .english
     
     var isSignUpComplete : Bool {
         if test_Mode {

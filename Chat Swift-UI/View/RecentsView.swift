@@ -75,6 +75,8 @@ struct RecentsView: View {
                             
                             NavigationLink(destination: MessageView(chatRoomId: $vm.chatRoomId, memberIds: $vm.memberIds, withUserAvatar: $vm.withUserAvatar, showTab: $showTab), isActive: $vm.pushNav) {
                                 
+                                /// BUG ! No active push nav when first Touch because exclude recents..
+
                                 RecentCell(recent: recent)
                                     .contentShape(Rectangle())
                                     .offset(x: recent.offSet)

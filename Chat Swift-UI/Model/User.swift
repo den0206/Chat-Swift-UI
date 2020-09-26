@@ -22,26 +22,7 @@ class User {
 //        self.bio = dictionary[kBIO] as? String ?? ""
     }
     
-    class func currentId() -> String {
-        
-        guard let currentUser = Auth.auth().currentUser else {return ""}
-        
-        return currentUser.uid
-    }
-       
-    
-    class func currentUser() -> User? {
-        if Auth.auth().currentUser != nil {
-            
-            if let dictiobnary = UserDefaults.standard.object(forKey: kCURRENTUSER) {
-                
-                return User(dictionary: dictiobnary as! [String : Any])
-            }
-        }
-        
-        return nil
-    }
-    
+
 }
 
 

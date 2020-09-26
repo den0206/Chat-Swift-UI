@@ -13,6 +13,10 @@ struct DownloadLangageView: View {
     
     @StateObject var vm : DownloadLangageViewModel = DownloadLangageViewModel()
     var firstAppears : Bool = false
+    
+    init() {
+            UITableView.appearance().backgroundColor = .white // Uses UIColor
+    }
     var body: some View {
         
         
@@ -28,11 +32,9 @@ struct DownloadLangageView: View {
                         case.downloaded :
                             vm.deleteLanguage(i)
                         case .processing(_):
-                            vm.dataList[i].state = .downloaded
+                            break
                         case .none :
-                           
                             vm.checkdownloadLang(i)
-                            
                         }
                         
                     }) {
@@ -55,7 +57,7 @@ struct DownloadLangageView: View {
                 vm.alert
             }
         }
-        .background(Color.white)
+       
        
         
     }

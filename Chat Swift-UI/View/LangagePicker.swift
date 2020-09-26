@@ -15,10 +15,11 @@ struct LangagePicker: View {
     
     var body: some View {
         
-        Text(selectrdLangage.title)
-            .font(.title2)
-        
-        VStack(spacing : 10) {
+        VStack(spacing : 5) {
+            
+            Text("第一言語　\(selectrdLangage.title)")
+                .font(.title2)
+         
             Picker("", selection: $selectrdLangage) {
                 
                 ForEach(TranslateLanguage.allLanguages().sorted(by: {locale.localizedString(forLanguageCode: $0.rawValue)! < locale.localizedString(forLanguageCode: $1.rawValue)! }), id : \.self) { i in
@@ -27,6 +28,12 @@ struct LangagePicker: View {
                 }
                 
             }
+            .frame(width: 200)
+            .clipped()
+            .labelsHidden()
+            
+            
+            
  
         }
 

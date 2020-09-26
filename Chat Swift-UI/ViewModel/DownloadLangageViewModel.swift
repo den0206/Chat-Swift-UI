@@ -26,6 +26,7 @@ class DownloadLangageViewModel: ObservableObject {
     func setupObject() {
         let localModels = ModelManager.modelManager().downloadedTranslateModels
         
+        print(localModels.count)
         data.removeAll()
         dataList = TranslateLanguage.allLanguages().map { lang -> DownloadLanguageObject in
             if let model = localModels.first(where: {$0.language.rawValue == lang.rawValue}) {

@@ -71,6 +71,7 @@ class RecentsViewModel : ObservableObject {
                     
                     for i in 0..<self.recents.count {
                         
+
                         if self.recents[i].id == changeId {
                             self.recents[i] = changeRecent
                             self.recents.sort(by: {$0.date > $1.date})

@@ -14,6 +14,7 @@ public let test_Mode = true
 public let kUSERID = "userID"
 public let kEMAIL = "email"
 public let kPASSWORD = "password"
+public let kLANG = "language"
 public let kAVATAR = "avatarString"
 public let kPROFILE_IMAGE = "profileImage"
 public let kNAME = "name"

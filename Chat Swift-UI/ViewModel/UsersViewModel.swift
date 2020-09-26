@@ -22,8 +22,6 @@ class UsersViewModel : ObservableObject {
             
             case .success(let users):
                 self.users = users
-                print(users.count)
-
             case .failure(let error):
                 self.errorMessage = error.localizedDescription
                 print(self.errorMessage)

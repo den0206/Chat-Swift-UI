@@ -21,7 +21,8 @@ struct SignUpView: View {
     var body: some View {
         
         NavigationView {
-            VStack {
+            
+            ScrollView(.vertical, showsIndicators: false) {
                 
                 /// image
                 if !user.selectedImage() {
@@ -84,15 +85,22 @@ struct SignUpView: View {
                         }
                     }
                     
+             
                     
                 }
                 .frame(width : 300)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 
+                
+                
+                LangagePicker(selectrdLangage: $user.language)
+                    .padding(.top, 30)
+
+                
                 VStack(spacing : 20) {
                     
                     Button(action: {
-                        FBAuth.createUser(email: user.email, name: user.fullname, password: user.password, imagedata: user.imageData) { (result) in
+                        FBAuth.createUser(email: user.email, name: user.fullname, password: user.password, imagedata: user.imageData, language: user.language) { (result) in
                             
                             switch result {
                             
