@@ -6,27 +6,57 @@
 //
 
 import SwiftUI
+import Firebase
+import MLKit
 
 struct DownloadLangageView: View {
     
     @StateObject var vm : DownloadLangageViewModel = DownloadLangageViewModel()
-    
+    var firstAppears : Bool = false
     var body: some View {
-        VStack{
+        
+        
+        NavigationView {
             
-            
-            List(vm.dataList.indices, id : \.self) { i in
+            VStack{
                 
-                Button(action: {
-                    vm.dataList[i].state = .processing(Progress())
-                }) {
-                    languageCell(lang: $vm.dataList[i])
+                List(vm.dataList.indices, id : \.self) { i in
+                    
+                    Button(action: {
+                        switch  vm.dataList[i].state {
+                        
+                        case.downloaded :
+                            vm.deleteLanguage(i)
+                        case .processing(_):
+                            vm.dataList[i].state = .downloaded
+                        case .none :
+                           
+                            vm.checkdownloadLang(i)
+                            
+                        }
+                        
+                    }) {
+                        languageCell(lang: $vm.dataList[i])
+                    }
+                    
+                    
                 }
-                
-                   
             }
-
+            
+            .navigationBarTitle(Text("使用可能言語"))
+            .navigationBarTitleDisplayMode(.inline)
+            .navigationBarItems(trailing: Button(action: {
+                vm.deleteAllLanguage()
+            }, label: {
+                Text("Delete ALL")
+                    .foregroundColor(.red)
+            }))
+            .alert(isPresented: $vm.showAlert) { () -> Alert in
+                vm.alert
+            }
         }
+        .background(Color.white)
+       
         
     }
     
