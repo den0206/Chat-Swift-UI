@@ -33,6 +33,7 @@ public let kCOUNTER = "counter"
 public let kTYPE = "type"
 public let kWITHUSERFULLNAME = "withUserFullName"
 public let kWITHUSERUSERID = "withUserUserID"
+public let kWITHUSELANG = "withUserLang"
 public let kSTATUS = "status"
 public let kMESSAGEID = "messageId"
 

@@ -90,7 +90,8 @@ struct languageCell : View {
             switch lang.state {
             case .downloaded :
                 Text("Downloaded")
-            case .processing(_):
+            case .processing(_) :
+                
                 ProgressView()
             case .none:
                 Text("DL")

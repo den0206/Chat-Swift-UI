@@ -14,7 +14,7 @@ struct FBUser : Hashable{
     let name : String
     let email : String
     var avatarString : String
-    var lang : TranslateLanguage = .english
+    var lang : TranslateLanguage = .japanese
     
     init(uid : String, name : String, email : String, avatarString : String, lang : TranslateLanguage) {
         
@@ -64,7 +64,7 @@ extension FBUser {
 
 func encodelanguage(langString : String) -> TranslateLanguage {
     
-    var language : TranslateLanguage = .japanese
+    var language : TranslateLanguage = .vietnamese
     
     TranslateLanguage.allLanguages().forEach { (lang) in
         if lang.title == langString {

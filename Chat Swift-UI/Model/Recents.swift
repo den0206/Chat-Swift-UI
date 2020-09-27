@@ -8,6 +8,7 @@
 import Foundation
 import SwiftUI
 import FirebaseFirestore
+import MLKit
 
 class Recent : Identifiable {
     
@@ -18,9 +19,11 @@ class Recent : Identifiable {
     var withUserName : String
     var withUserId : String
     var withUserAvatar : String
+    var withUserLang : TranslateLanguage
     var lastMessage : String
     var counter : Int
     var date : String
+    
     var offSet : CGFloat = 0
     
     init(dic : [String : Any]) {
@@ -35,6 +38,9 @@ class Recent : Identifiable {
         self.lastMessage = dic[kLASTMESSAGE] as? String ?? ""
         self.counter = dic[kCOUNTER] as? Int ?? 0
         self.date = dic[kDATE] as? String ?? ""
+        
+        let lang = dic[kWITHUSELANG] as? String ?? ""
+        self.withUserLang = encodelanguage(langString: lang)
 
         
     }

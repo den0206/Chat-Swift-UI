@@ -8,6 +8,7 @@
 import SwiftUI
 import Firebase
 
+
 struct RecentsView: View {
     
     @EnvironmentObject var userInfo : UserInfo
@@ -81,11 +82,19 @@ struct RecentsView: View {
                                     .contentShape(Rectangle())
                                     .offset(x: recent.offSet)
                                     .onTapGesture {
-                                        self.vm.chatRoomId = recent.chatRoomId
-                                        self.vm.memberIds = [userInfo.user.uid, recent.withUserId]
-                                        self.vm.withUserAvatar = downloadImageFromData(picturedata: recent.withUserAvatar)!
-                                        self.showTab = false
-                                        self.vm.pushNav = true
+                                        
+                                        vm.checkDownloadedLang(lang: recent.withUserLang) { (already) in
+                                            
+                                            if already {
+                                                self.vm.chatRoomId = recent.chatRoomId
+                                                self.vm.memberIds = [userInfo.user.uid, recent.withUserId]
+                                                self.vm.withUserAvatar = downloadImageFromData(picturedata: recent.withUserAvatar)!
+                                                self.showTab = false
+                                                self.vm.pushNav = true
+                                            }
+                                        }
+                                    
+                                    
                                     }
                                     .gesture(DragGesture().onChanged({ (value) in
                                         self.vm.objectWillChange.send()
@@ -107,13 +116,10 @@ struct RecentsView: View {
                             }
                             .buttonStyle(PlainButtonStyle())
                         }
-                        
-                       
-                        
+ 
                     }
                 }
     
-                
 
             }
             .navigationBarTitle("Chat", displayMode : .inline)
@@ -154,28 +160,7 @@ struct RecentsView: View {
                 }
             })
             .alert(isPresented: $vm.showAlert, content: { () -> Alert in
-                
-                switch vm.alertType {
-                
-                case .logOut:
-                    return Alert(title: Text("LogOut"), message: Text("ログアウトしますか？"), primaryButton: .cancel(Text("キャンセル")), secondaryButton: .destructive(Text("ログアウト"), action: {
-                        
-                        FBAuth.logOut { (result) in
-                            
-                            switch result {
-                            
-                            case .success(_):
-                               
-                                self.userInfo.isUserAuthenTicated = .signedOut
-                                
-                            case .failure(let error):
-                                print(error.localizedDescription)
-                            }
-                        }
-                    }))
-                case .errorMessage:
-                    return Alert(title: Text("Error"), message: Text(vm.errorMessage), dismissButton: .default(Text("OK")))
-                }
+                vm.alert
                 
             })
             .onAppear {
@@ -237,7 +222,12 @@ struct RecentCell : View {
                 }
                 
                 VStack(alignment: .leading, spacing: 12) {
-                    Text(recent.withUserName)
+                    HStack(spacing : 5) {
+                        Text(recent.withUserName)
+                        
+                        Text("(\(recent.withUserLang.title))")
+                    }
+                   
                     Text(recent.lastMessage)
                         .font(.caption)
                         .lineLimit(1)

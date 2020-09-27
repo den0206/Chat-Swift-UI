@@ -6,10 +6,12 @@
 //
 
 import Foundation
+import SwiftUI
 import UIKit
+import MLKit
 
 enum RecentViewAlert {
-    case logOut
+    case checkDownload
     case errorMessage
 }
 
@@ -21,16 +23,47 @@ enum ModelType {
 class RecentsViewModel : ObservableObject {
     
     @Published var showAlert = false
-    @Published var alertType : RecentViewAlert = .logOut
+    @Published var alertType : RecentViewAlert = .errorMessage
     @Published var modelType : ModelType = .Users
     @Published var showModel = false
     @Published var chatRoomId = ""
     @Published var memberIds = [String]()
     @Published var withUserAvatar : UIImage = .init()
     @Published var pushNav = false
-    @Published var errorMessage = ""
-    
+    @Published var alert : Alert = Alert(title: Text(""))
+    @Published var progress : Progress = Progress()
     @Published var recents = [Recent]()
+    
+    func checkDownloadedLang(lang : TranslateLanguage,  completion : @escaping(Bool) -> ())  {
+        
+        let langModel = TranslateRemoteModel.translateRemoteModel(language: lang)
+        
+        if ModelManager.modelManager().isModelDownloaded(langModel) {
+           completion(true)
+        } else {
+            
+            
+            self.alertType = .checkDownload
+            self.showAlert = true
+            self.alert = Alert(title: Text("モデルのダウンロード"), message: Text("相手の言語モデルをダウンロードしても宜しいでしょうか？"), primaryButton: .cancel(Text("Cancel").foregroundColor(.red)), secondaryButton: .default(Text("Download"), action: { [self] in
+             
+                
+                progress = ModelManager.modelManager().download(langModel, conditions: ModelDownloadConditions(
+                    allowsCellularAccess: false,
+                    allowsBackgroundDownloading: true
+                ))
+                print(progress)
+                if progress.completedUnitCount == 1 {
+                    print("Call")
+                    completion(true)
+                }
+                
+                
+            
+            }))
+           
+        }
+    }
     
     func fetchRecents(userId : String) {
   
@@ -38,7 +71,7 @@ class RecentsViewModel : ObservableObject {
             
             if let error = error {
                 self.alertType = .errorMessage
-                self.errorMessage = error.localizedDescription
+                self.alert = Alert(title:Text("Error"), message: Text(error.localizedDescription), dismissButton: .default(Text("OK")))
                 self.showAlert = true
                 return
             }
@@ -46,7 +79,7 @@ class RecentsViewModel : ObservableObject {
             
             guard !snapshot.isEmpty else {
                 self.alertType = .errorMessage
-                self.errorMessage = "Not found Recents"
+                self.alert = Alert(title:Text("Error"), message: Text( "Not found Recents"), dismissButton: .default(Text("OK")))
                 self.showAlert = true
                 return
             }
