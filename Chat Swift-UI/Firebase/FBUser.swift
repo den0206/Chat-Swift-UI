@@ -64,7 +64,7 @@ extension FBUser {
 
 func encodelanguage(langString : String) -> TranslateLanguage {
     
-    var language : TranslateLanguage = .vietnamese
+    var language : TranslateLanguage = .japanese
     
     TranslateLanguage.allLanguages().forEach { (lang) in
         if lang.title == langString {

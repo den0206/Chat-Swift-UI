@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import MLKit
 
 struct MessageView: View {
     
@@ -15,12 +16,17 @@ struct MessageView: View {
     @Binding var chatRoomId : String
     @Binding var memberIds : [String]
     @Binding var withUserAvatar : UIImage
+    @Binding var withUserLang : TranslateLanguage
     @Binding var showTab : Bool
+    @State private var showModel : Bool = false
+    
+   
     
     var body: some View {
         
         VStack(spacing : 0) {
             
+            Text(withUserLang.title)
             
             ScrollViewReader { reader in
 
@@ -49,9 +55,15 @@ struct MessageView: View {
                 }
 
             }
-            /// Text field
-            MGTextField(text: $vm.text, sendAction: {vm.sendMessage(chatRoomId : chatRoomId, memberIds: memberIds, senderId: userInfo.user.uid)})
             
+            Button(action: {showModel = true}) {
+                /// Text field
+                MGTextField(text: $vm.text, sendAction: {vm.sendMessage(chatRoomId : chatRoomId, memberIds: memberIds, senderId: userInfo.user.uid)})
+            }
+            .sheet(isPresented: $showModel) {
+                TranslateLanguageView(currentUser: $userInfo.user, withUserLang : $withUserLang, vm: vm)
+            }
+  
         }
         .onAppear {
             self.showTab = false
@@ -61,9 +73,7 @@ struct MessageView: View {
             
             self.showTab = true
         }
-      
-        
-        
+    
     }
 }
 
@@ -135,6 +145,7 @@ struct MGTextField : View {
         
         HStack(spacing : 15) {
             TextField("Enter Message", text: $text)
+                .foregroundColor(.black)
                 .padding(.horizontal)
                 .frame(height : 45)
                 .background(Color.primary.opacity(0.06))

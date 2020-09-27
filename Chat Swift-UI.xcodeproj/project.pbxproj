@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3A119BA12520334600300985 /* TranslateLanguageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A119BA02520334600300985 /* TranslateLanguageView.swift */; };
 		3A18A80825137239002556DF /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A18A80725137239002556DF /* Service.swift */; };
 		3A23107A2517026E001CDD54 /* Downloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A2310792517026D001CDD54 /* Downloader.swift */; };
 		3A29E8B82518774500BCFEF8 /* RecentsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A29E8B72518774500BCFEF8 /* RecentsViewModel.swift */; };
@@ -51,6 +52,7 @@
 
 /* Begin PBXFileReference section */
 		2AF607C317D7584FA1D96B65 /* Pods_Chat_Swift_UI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Chat_Swift_UI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		3A119BA02520334600300985 /* TranslateLanguageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslateLanguageView.swift; sourceTree = "<group>"; };
 		3A18A80725137239002556DF /* Service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Service.swift; sourceTree = "<group>"; };
 		3A2310792517026D001CDD54 /* Downloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Downloader.swift; sourceTree = "<group>"; };
 		3A29E8B72518774500BCFEF8 /* RecentsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentsViewModel.swift; sourceTree = "<group>"; };
@@ -194,6 +196,7 @@
 				3AC7746F251B912A00C0576F /* UserEditView.swift */,
 				3ABA96C8251E43A9008826B1 /* LangagePicker.swift */,
 				3AD36D37251ED1A1004934EC /* DownloadLangageView.swift */,
+				3A119BA02520334600300985 /* TranslateLanguageView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -421,6 +424,7 @@
 				3A89694B2517344F00450B49 /* UsersView.swift in Sources */,
 				3AE9E75425137B1800AD001D /* Constants.swift in Sources */,
 				3AB27EC425111BE3000646DC /* Global Extensions.swift in Sources */,
+				3A119BA12520334600300985 /* TranslateLanguageView.swift in Sources */,
 				3ABA96C9251E43A9008826B1 /* LangagePicker.swift in Sources */,
 				3AB350002518526500F47796 /* MessageViewModel.swift in Sources */,
 				3A89694F25173C0000450B49 /* UsersViewModel.swift in Sources */,

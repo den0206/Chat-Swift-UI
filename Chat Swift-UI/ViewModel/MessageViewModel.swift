@@ -12,6 +12,7 @@ import MLKit
 class MessageViewModel : ObservableObject {
     
     @Published var text = ""
+    @Published var translated = ""
     @Published var messages = [Message]()
  
     
@@ -50,14 +51,13 @@ class MessageViewModel : ObservableObject {
         
     }
     
-    func sendMessage(chatRoomId : String, memberIds : [String], senderId : String) {
+    func translateLanguage(source : TranslateLanguage, target : TranslateLanguage) {
         
-        let options = TranslatorOptions(sourceLanguage: .japanese, targetLanguage: .english)
-      
+        let options = TranslatorOptions(sourceLanguage: source, targetLanguage: target)
         
         let translater = Translator.translator(options: options)
         
-        guard ModelManager.modelManager().isModelDownloaded(TranslateRemoteModel.translateRemoteModel(language: .japanese)) && ModelManager.modelManager().isModelDownloaded(TranslateRemoteModel.translateRemoteModel(language: .english)) else {
+        guard ModelManager.modelManager().isModelDownloaded(TranslateRemoteModel.translateRemoteModel(language: source)) && ModelManager.modelManager().isModelDownloaded(TranslateRemoteModel.translateRemoteModel(language: target)) else {
             
             print("Not yet download")
             return
@@ -70,30 +70,37 @@ class MessageViewModel : ObservableObject {
                 return
             }
             
-            print(result)
+            self.translated = result!
         }
         
-//        let message = Message(userId: senderId, msg: text, timeStamp: Date())
-//
-//        for id in memberIds {
-//
-//            do {
-//                let _ = try firebaseReference(.Message).document(id).collection(chatRoomId).addDocument(from: message)
-//
-//
-//            } catch(let error) {
-//                print(error.localizedDescription)
-//                return
-//            }
-//
-//
-//        }
-//
-//        updateRecent(chatRoomId: chatRoomId, lastMessage: text, currentId: senderId)
-//
-//        text = ""
-//
-//
+        
+        
+    }
+    
+    func sendMessage(chatRoomId : String, memberIds : [String], senderId : String) {
+
+        
+        let message = Message(userId: senderId, msg: text, timeStamp: Date())
+
+        for id in memberIds {
+
+            do {
+                let _ = try firebaseReference(.Message).document(id).collection(chatRoomId).addDocument(from: message)
+
+
+            } catch(let error) {
+                print(error.localizedDescription)
+                return
+            }
+
+
+        }
+
+        updateRecent(chatRoomId: chatRoomId, lastMessage: text, currentId: senderId)
+
+        text = ""
+
+
         
     }
     

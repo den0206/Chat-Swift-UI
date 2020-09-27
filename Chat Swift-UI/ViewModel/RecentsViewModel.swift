@@ -29,14 +29,15 @@ class RecentsViewModel : ObservableObject {
     @Published var chatRoomId = ""
     @Published var memberIds = [String]()
     @Published var withUserAvatar : UIImage = .init()
+    @Published var withUserLang : TranslateLanguage = .english
     @Published var pushNav = false
     @Published var alert : Alert = Alert(title: Text(""))
     @Published var progress : Progress = Progress()
     @Published var recents = [Recent]()
     
-    func checkDownloadedLang(lang : TranslateLanguage,  completion : @escaping(Bool) -> ())  {
+    func checkDownloadedLang(  completion : @escaping(Bool) -> ())  {
         
-        let langModel = TranslateRemoteModel.translateRemoteModel(language: lang)
+        let langModel = TranslateRemoteModel.translateRemoteModel(language: self.withUserLang)
         
         if ModelManager.modelManager().isModelDownloaded(langModel) {
            completion(true)

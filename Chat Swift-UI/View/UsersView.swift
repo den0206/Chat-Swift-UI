@@ -6,14 +6,20 @@
 //
 
 import SwiftUI
+import MLKit
 
 struct UsersView: View {
     @EnvironmentObject var userInfo : UserInfo
 
     @State private var isSearchng = false
     @State private var searchText : String = ""
+    
+    /// for user root navigation
     @Binding var chatRoomId : String
     @Binding var membserIds : [String]
+    @Binding var withUserLang : TranslateLanguage
+    @Binding var withUserImage : UIImage
+    
     @Binding var pushNav : Bool
     @Environment(\.presentationMode) var presentationMode
     @ObservedObject var vm : UsersViewModel = UsersViewModel()
@@ -34,6 +40,8 @@ struct UsersView: View {
                         
                         self.chatRoomId = startPrivateChat(currentUser: userInfo.user, user2: user)
                         self.membserIds = [userInfo.user.uid, user.uid]
+                        self.withUserLang = user.lang
+                        self.withUserImage = downloadImageFromData(picturedata: user.avatarString)!
                         self.presentationMode.wrappedValue.dismiss()
                                         
                         self.pushNav = true

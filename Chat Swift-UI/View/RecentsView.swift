@@ -74,7 +74,7 @@ struct RecentsView: View {
                                 .frame(width: 90)
                             }
                             
-                            NavigationLink(destination: MessageView(chatRoomId: $vm.chatRoomId, memberIds: $vm.memberIds, withUserAvatar: $vm.withUserAvatar, showTab: $showTab), isActive: $vm.pushNav) {
+                            NavigationLink(destination: MessageView( chatRoomId: $vm.chatRoomId, memberIds: $vm.memberIds, withUserAvatar: $vm.withUserAvatar, withUserLang: $vm.withUserLang, showTab: $showTab), isActive: $vm.pushNav) {
                                 
                                 /// BUG ! No active push nav when first Touch because exclude recents..
 
@@ -82,8 +82,9 @@ struct RecentsView: View {
                                     .contentShape(Rectangle())
                                     .offset(x: recent.offSet)
                                     .onTapGesture {
+                                        vm.withUserLang = recent.withUserLang
                                         
-                                        vm.checkDownloadedLang(lang: recent.withUserLang) { (already) in
+                                        vm.checkDownloadedLang() { (already) in
                                             
                                             if already {
                                                 self.vm.chatRoomId = recent.chatRoomId
@@ -153,7 +154,8 @@ struct RecentsView: View {
                 
                 switch vm.modelType {
                 case .Users :
-                    UsersView(chatRoomId: $vm.chatRoomId, membserIds: $vm.memberIds, pushNav : $vm.pushNav)
+                    UsersView(chatRoomId: $vm.chatRoomId, membserIds: $vm.memberIds, withUserLang: $vm.withUserLang, withUserImage: $vm.withUserAvatar, pushNav: $vm.pushNav)
+//                    UsersView(chatRoomId: $vm.chatRoomId, membserIds: $vm.memberIds, pushNav : $vm.pushNav)
                 case .Edit :
                     UserEditView()
 
