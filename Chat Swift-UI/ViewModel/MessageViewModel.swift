@@ -14,6 +14,7 @@ class MessageViewModel : ObservableObject {
     @Published var text = ""
     @Published var translated = ""
     @Published var messages = [Message]()
+    @Published var isEditing = false
  
     
     func loadMessage(chatRoomId : String, userId : String) {

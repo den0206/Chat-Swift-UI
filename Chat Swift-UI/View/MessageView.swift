@@ -11,6 +11,7 @@ import MLKit
 struct MessageView: View {
     
     @EnvironmentObject var userInfo : UserInfo
+    @ObservedObject var keyboardHeightHelper = KeyboardHeightHelper()
     @StateObject var vm : MessageViewModel = MessageViewModel()
     var scrolled = false
     @Binding var chatRoomId : String
@@ -26,48 +27,76 @@ struct MessageView: View {
         
         VStack(spacing : 0) {
             
-            Text(withUserLang.title)
-            
             ScrollViewReader { reader in
-
+                
                 ScrollView {
-
-                    VStack(spacing : 15) {
-
-                        ForEach(vm.messages) { message in
+                    
+                    ZStack {
+                        
+                        /// Z1
+                        VStack(spacing : 15) {
                             
-                            MessageCell(message: message, currentId: userInfo.user.uid, withUserAvatar: withUserAvatar)
-                                .onAppear {
-                                    /// scroll when FirstLoad
-                                    
-                                    if message.id == self.vm.messages.last?.id && !scrolled {
-                                        reader.scrollTo(vm.messages.last?.id, anchor: .bottom)
+                            ForEach(vm.messages) { message in
+                                
+                                MessageCell(message: message, currentId: userInfo.user.uid, withUserAvatar: withUserAvatar)
+                                    .onAppear {
+                                        /// scroll when FirstLoad
+                                        
+                                        if message.id == self.vm.messages.last?.id && !scrolled {
+                                            reader.scrollTo(vm.messages.last?.id, anchor: .bottom)
+                                        }
                                     }
-                                }
-
+                                
+                            }
+                            .onChange(of: vm.messages) { (value) in
+                                /// scroll to bottom get New Chat
+                                reader.scrollTo(vm.messages.last?.id, anchor: .bottom)
+                            }
                         }
-                        .onChange(of: vm.messages) { (value) in
-                            /// scroll to bottom get New Chat
-                            reader.scrollTo(vm.messages.last?.id, anchor: .bottom)
+                        .padding(.vertical)
+                        
+                        
+                        if vm.isEditing {
+
+                            
+                            ZStack(alignment: .center) {
+                                
+                                /// blur
+                                Color.black.opacity(0.6)
+                                    .onTapGesture {
+                                        hideKeyBord()
+                                    }
+                                
+                                Text(vm.translated)
+                                    .fontWeight(.bold)
+                                    .foregroundColor(.white)
+                                    .padding()
+                                    .background(Color.green)
+                                     /// tail
+                                    .clipShape(BubbleShape(myMessage: true))
+                                    
+                                
+                                
+                            }
+                            .frame(width : UIScreen.main.bounds.width, height: (UIScreen.main.bounds.height) - keyboardHeightHelper.keyboardHeight)
+               
                         }
                     }
-                    .padding(.vertical)
+                    
                 }
 
             }
             
             Button(action: {showModel = true}) {
                 /// Text field
-                MGTextField(text: $vm.text, sendAction: {vm.sendMessage(chatRoomId : chatRoomId, memberIds: memberIds, senderId: userInfo.user.uid)})
+                MGTextField(text: $vm.text, editing: $vm.isEditing, sendAction: {vm.sendMessage(chatRoomId : chatRoomId, memberIds: memberIds, senderId: userInfo.user.uid)})
                     .onChange(of: vm.text) { (valeu) in
-                        print(valeu)
+                        
+                        vm.translateLanguage(source: .japanese, target: .english)
+
                     }
-                    
             }
-            .sheet(isPresented: $showModel) {
-                TranslateLanguageView(currentUser: $userInfo.user, withUserLang : $withUserLang, vm: vm)
-            }
-  
+
         }
         .onAppear {
             self.showTab = false
@@ -106,7 +135,7 @@ struct MessageCell : View {
                     .padding()
                     .background(message.userId == currentId ? Color.green : Color.gray)
                      /// tail
-                    .clipShape(ChatBubble(myMessage: message.userId == currentId))
+                    .clipShape(BubbleShape(myMessage: message.userId == currentId))
                 
                 Text(message.timeStamp, style: .time)
                     .font(.caption2)
@@ -143,18 +172,24 @@ struct AvatarView : View {
 struct MGTextField : View {
     
     @Binding var text : String
+    @Binding var editing : Bool
     var sendAction : () -> Void
     
     var body: some View {
         
         HStack(spacing : 15) {
-            
-            TextField("Enter Message", text: $text)
-                .foregroundColor(.black)
-                .padding(.horizontal)
-                .frame(height : 45)
-                .background(Color.primary.opacity(0.06))
-                .clipShape(Capsule())
+    
+            TextField("Enter Message", text: $text) { (editing) in
+                self.editing = editing
+            } onCommit: {
+                self.editing = editing
+            }
+            .foregroundColor(.black)
+            .padding(.horizontal)
+            .frame(height : 45)
+            .background(Color.primary.opacity(0.06))
+            .clipShape(Capsule())
+
             
             
             if text != "" {
@@ -171,9 +206,6 @@ struct MGTextField : View {
             
             
         }.padding(.bottom, 5)
-        
-  
-        
-        
+
     }
 }
