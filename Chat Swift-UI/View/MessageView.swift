@@ -59,6 +59,10 @@ struct MessageView: View {
             Button(action: {showModel = true}) {
                 /// Text field
                 MGTextField(text: $vm.text, sendAction: {vm.sendMessage(chatRoomId : chatRoomId, memberIds: memberIds, senderId: userInfo.user.uid)})
+                    .onChange(of: vm.text) { (valeu) in
+                        print(valeu)
+                    }
+                    
             }
             .sheet(isPresented: $showModel) {
                 TranslateLanguageView(currentUser: $userInfo.user, withUserLang : $withUserLang, vm: vm)
@@ -144,12 +148,14 @@ struct MGTextField : View {
     var body: some View {
         
         HStack(spacing : 15) {
+            
             TextField("Enter Message", text: $text)
                 .foregroundColor(.black)
                 .padding(.horizontal)
                 .frame(height : 45)
                 .background(Color.primary.opacity(0.06))
                 .clipShape(Capsule())
+            
             
             if text != "" {
                 Button(action: {self.sendAction()}) {

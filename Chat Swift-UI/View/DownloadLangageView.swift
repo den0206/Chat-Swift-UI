@@ -90,9 +90,15 @@ struct languageCell : View {
             switch lang.state {
             case .downloaded :
                 Text("Downloaded")
-            case .processing(_) :
+            case .processing(let progrress) :
                 
-                ProgressView()
+                VStack(alignment: .center) {
+                    ProgressView(progrress)
+                        .frame(width: UIScreen.main.bounds.width / 2 - 50, height : 50)
+                }
+            
+                    
+                    
             case .none:
                 Text("DL")
                     .foregroundColor(.blue)
