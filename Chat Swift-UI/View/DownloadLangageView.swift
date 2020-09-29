@@ -43,6 +43,7 @@ struct DownloadLangageView: View {
                     
                     
                 }
+                .listStyle(PlainListStyle())
             }
             
             .navigationBarTitle(Text("使用可能言語"))

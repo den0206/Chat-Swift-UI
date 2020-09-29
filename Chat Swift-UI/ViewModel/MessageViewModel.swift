@@ -15,7 +15,8 @@ class MessageViewModel : ObservableObject {
     @Published var translated = ""
     @Published var messages = [Message]()
     @Published var isEditing = false
- 
+    @Published var isLoading = false
+    var reachLast = false
     
     func loadMessage(chatRoomId : String, userId : String) {
         
@@ -30,6 +31,7 @@ class MessageViewModel : ObservableObject {
             
             guard !snapshot.isEmpty else {print("Empty") ; return}
             
+            self.isLoading = true
             snapshot.documentChanges.forEach { (doc) in
                 
                 switch doc.type {
@@ -39,7 +41,11 @@ class MessageViewModel : ObservableObject {
                     
                     DispatchQueue.main.async {
                         self.messages.append(message!)
-                        print(self.messages.count)
+                        if self.messages.count == snapshot.documents.count {
+                            self.isLoading = false
+                            print("Reach Last!")
+                        }
+                       
                     }
                 default :
                     return

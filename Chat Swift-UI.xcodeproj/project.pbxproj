@@ -11,6 +11,7 @@
 		3A18A80825137239002556DF /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A18A80725137239002556DF /* Service.swift */; };
 		3A23107A2517026E001CDD54 /* Downloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A2310792517026D001CDD54 /* Downloader.swift */; };
 		3A29E8B82518774500BCFEF8 /* RecentsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A29E8B72518774500BCFEF8 /* RecentsViewModel.swift */; };
+		3A2E7133252364660022377F /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A2E7132252364660022377F /* LoadingView.swift */; };
 		3A2E85B125159D4E00F66910 /* UserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A2E85B025159D4E00F66910 /* UserInfo.swift */; };
 		3A2E85B52515A28500F66910 /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A2E85B42515A28500F66910 /* UserViewModel.swift */; };
 		3A2E85B92515A7DF00F66910 /* SignInWithEmailView .swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A2E85B82515A7DF00F66910 /* SignInWithEmailView .swift */; };
@@ -57,6 +58,7 @@
 		3A18A80725137239002556DF /* Service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Service.swift; sourceTree = "<group>"; };
 		3A2310792517026D001CDD54 /* Downloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Downloader.swift; sourceTree = "<group>"; };
 		3A29E8B72518774500BCFEF8 /* RecentsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentsViewModel.swift; sourceTree = "<group>"; };
+		3A2E7132252364660022377F /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		3A2E85B025159D4E00F66910 /* UserInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfo.swift; sourceTree = "<group>"; };
 		3A2E85B42515A28500F66910 /* UserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
 		3A2E85B82515A7DF00F66910 /* SignInWithEmailView .swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SignInWithEmailView .swift"; sourceTree = "<group>"; };
@@ -133,6 +135,7 @@
 		3A47ADB1250E4A6100CF3E15 /* Extension */ = {
 			isa = PBXGroup;
 			children = (
+				3A2E7132252364660022377F /* LoadingView.swift */,
 				3A47ADB2250E4A8500CF3E15 /* FIrebaseReference.swift */,
 				3AB27EC325111BE3000646DC /* Global Extensions.swift */,
 				3AE9E75325137B1800AD001D /* Constants.swift */,
@@ -411,6 +414,7 @@
 				3AED782525138347003BC3E3 /* User.swift in Sources */,
 				3AD8628D2522022B00CCCD73 /* ExampleBubbleView.swift in Sources */,
 				3A2E85B125159D4E00F66910 /* UserInfo.swift in Sources */,
+				3A2E7133252364660022377F /* LoadingView.swift in Sources */,
 				3A23107A2517026E001CDD54 /* Downloader.swift in Sources */,
 				3AC77470251B912A00C0576F /* UserEditView.swift in Sources */,
 				3A52AC62250E41A500997131 /* exHomeView.swift in Sources */,

@@ -58,6 +58,7 @@ struct UsersView: View {
             .onAppear(perform: {
                 vm.loadUser(currentUid: userInfo.user.uid)
             })
+          
             
             .navigationBarTitle("Users", displayMode : .inline)
             .navigationBarItems(leading: Button(action: {
@@ -68,7 +69,10 @@ struct UsersView: View {
                     .foregroundColor(.black)
                 
             }))
+            
         }
+        .loading(ishowing: $vm.isLoading)
+        
     
        
     }

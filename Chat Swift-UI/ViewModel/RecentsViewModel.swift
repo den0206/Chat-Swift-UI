@@ -34,6 +34,7 @@ class RecentsViewModel : ObservableObject {
     @Published var alert : Alert = Alert(title: Text(""))
     @Published var progress : Progress = Progress()
     @Published var recents = [Recent]()
+    @Published var isLoading = false
     
     func checkDownloadedLang(  completion : @escaping(Bool) -> ())  {
         
@@ -67,7 +68,8 @@ class RecentsViewModel : ObservableObject {
     }
     
     func fetchRecents(userId : String) {
-  
+        self.isLoading = true
+        
         firebaseReference(.Recents).whereField(kUSERID, isEqualTo: userId).order(by: kDATE, descending: true).addSnapshotListener { (snapshot, error) in
             
             if let error = error {
@@ -85,6 +87,7 @@ class RecentsViewModel : ObservableObject {
                 return
             }
             
+          
             snapshot.documentChanges.forEach { (diff) in
                 
                 switch diff.type {
@@ -95,6 +98,10 @@ class RecentsViewModel : ObservableObject {
                     
                     if recent.lastMessage != "" {
                         self.recents.append( recent)
+                        
+                        if self.recents.count == snapshot.documents.count {
+                            self.isLoading = false
+                        }
                     }
                     
                 case .modified:

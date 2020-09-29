@@ -183,6 +183,7 @@ struct RecentsView: View {
                 
             }
         }
+        .loading(ishowing: $vm.isLoading)
        
     }
     

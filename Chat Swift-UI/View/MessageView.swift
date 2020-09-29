@@ -11,6 +11,7 @@ import MLKit
 struct MessageView: View {
     
     @EnvironmentObject var userInfo : UserInfo
+
     @ObservedObject var keyboardHeightHelper = KeyboardHeightHelper()
     @StateObject var vm : MessageViewModel = MessageViewModel()
     var scrolled = false
@@ -19,10 +20,8 @@ struct MessageView: View {
     @Binding var withUserAvatar : UIImage
     @Binding var withUserLang : TranslateLanguage
     @Binding var showTab : Bool
-    @State private var showModel : Bool = false
     
-   
-    
+
     var body: some View {
         
         VStack(spacing : 0) {
@@ -67,14 +66,17 @@ struct MessageView: View {
                                         hideKeyBord()
                                     }
                                 
-                                Text(vm.translated)
-                                    .fontWeight(.bold)
-                                    .foregroundColor(.white)
-                                    .padding()
-                                    .background(Color.green)
-                                     /// tail
-                                    .clipShape(BubbleShape(myMessage: true))
+                                if vm.text != "" {
+                                    Text(vm.translated)
+                                        .fontWeight(.bold)
+                                        .foregroundColor(.white)
+                                        .padding()
+                                        .background(Color.green)
+                                        /// tail
+                                        .clipShape(BubbleShape(myMessage: true))
                                     
+                                }
+                                
                                 
                                 
                             }
@@ -87,16 +89,16 @@ struct MessageView: View {
 
             }
             
-            Button(action: {showModel = true}) {
-                /// Text field
-                MGTextField(text: $vm.text, editing: $vm.isEditing, sendAction: {vm.sendMessage(chatRoomId : chatRoomId, memberIds: memberIds, senderId: userInfo.user.uid)})
-                    .onChange(of: vm.text) { (valeu) in
-                        
-                        vm.translateLanguage(source: .japanese, target: .english)
-
-                    }
-            }
-
+            
+            /// Text field
+            MGTextField(text: $vm.text, editing: $vm.isEditing, sendAction: {vm.sendMessage(chatRoomId : chatRoomId, memberIds: memberIds, senderId: userInfo.user.uid)})
+                .onChange(of: vm.text) { (valeu) in
+                    
+                    vm.translateLanguage(source: .japanese, target: .english)
+                    
+                }
+            
+            
         }
         .onAppear {
             self.showTab = false
@@ -106,6 +108,8 @@ struct MessageView: View {
             
             self.showTab = true
         }
+        .loading(ishowing: $vm.isLoading)
+        
     
     }
 }
