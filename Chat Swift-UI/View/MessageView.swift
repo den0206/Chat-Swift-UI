@@ -11,7 +11,7 @@ import MLKit
 struct MessageView: View {
     
     @EnvironmentObject var userInfo : UserInfo
-
+    
     @ObservedObject var keyboardHeightHelper = KeyboardHeightHelper()
     @StateObject var vm : MessageViewModel = MessageViewModel()
     var scrolled = false
@@ -21,18 +21,21 @@ struct MessageView: View {
     @Binding var withUserLang : TranslateLanguage
     @Binding var showTab : Bool
     
-
+    
     var body: some View {
+        
+        
         
         VStack(spacing : 0) {
             
             ScrollViewReader { reader in
                 
-                ScrollView {
+                ZStack {
+                
+                    /// Z1
                     
-                    ZStack {
+                    ScrollView {
                         
-                        /// Z1
                         VStack(spacing : 15) {
                             
                             ForEach(vm.messages) { message in
@@ -54,19 +57,31 @@ struct MessageView: View {
                         }
                         .padding(.vertical)
                         
+               
+                    }
+                
+                
+          
+                    if vm.isEditing {
                         
-                        if vm.isEditing {
-
+                        
+                        ZStack(alignment: .center) {
                             
-                            ZStack(alignment: .center) {
+                            /// blur
+                            Color.black.opacity(0.6)
+                                .onTapGesture {
+                                    hideKeyBord()
+                                }
+                            
+                          
                                 
-                                /// blur
-                                Color.black.opacity(0.6)
-                                    .onTapGesture {
-                                        hideKeyBord()
-                                    }
+                            
+                            VStack(alignment: .center) {
                                 
                                 if vm.text != "" {
+                                    
+                                    Spacer()
+                                    
                                     Text(vm.translated)
                                         .fontWeight(.bold)
                                         .foregroundColor(.white)
@@ -77,28 +92,43 @@ struct MessageView: View {
                                     
                                 }
                                 
+                                Spacer()
+                                
+                                MGTextField(text: $vm.text, editing: $vm.isEditing, sendAction: {
+                                                hideKeyBord()
+                                                vm.sendMessage(chatRoomId : chatRoomId, memberIds: memberIds, senderId: userInfo.user.uid)} )
+                                .onChange(of: vm.text) { (valeu) in
+                                    
+                                    vm.translateLanguage(source: .japanese, target: .english)
+                                    
+                                }
+                                .background(Color.white)
+                                .padding(.bottom)
+                                
                                 
                                 
                             }
-                            .frame(width : UIScreen.main.bounds.width, height: (UIScreen.main.bounds.height) - keyboardHeightHelper.keyboardHeight)
-               
                         }
+                        .frame(width : UIScreen.main.bounds.width, height: (UIScreen.main.bounds.height) - keyboardHeightHelper.keyboardHeight)
+                        .animation(.spring())
+                        
+                        
                     }
                     
+                    
                 }
-
             }
             
             
-            /// Text field
-            MGTextField(text: $vm.text, editing: $vm.isEditing, sendAction: {vm.sendMessage(chatRoomId : chatRoomId, memberIds: memberIds, senderId: userInfo.user.uid)})
-                .onChange(of: vm.text) { (valeu) in
+                /// Text field
+                MGTextField(text: $vm.text, editing: $vm.isEditing, sendAction: {vm.sendMessage(chatRoomId : chatRoomId, memberIds: memberIds, senderId: userInfo.user.uid)})
+                    .onChange(of: vm.text) { (valeu) in
+                        
+                        vm.translateLanguage(source: .japanese, target: .english)
+                        
+                    }
                     
-                    vm.translateLanguage(source: .japanese, target: .english)
-                    
-                }
-            
-            
+
         }
         .onAppear {
             self.showTab = false
@@ -108,9 +138,10 @@ struct MessageView: View {
             
             self.showTab = true
         }
-        .loading(ishowing: $vm.isLoading)
+        .animation(.spring())
+        //        .loading(ishowing: $vm.isLoading)
         
-    
+        
     }
 }
 
@@ -120,7 +151,7 @@ struct MessageCell : View {
     var message : Message
     var currentId : String
     var withUserAvatar : UIImage
-
+    
     var body: some View {
         
         HStack(spacing : 15) {
@@ -138,7 +169,7 @@ struct MessageCell : View {
                     .foregroundColor(.white)
                     .padding()
                     .background(message.userId == currentId ? Color.green : Color.gray)
-                     /// tail
+                    /// tail
                     .clipShape(BubbleShape(myMessage: message.userId == currentId))
                 
                 Text(message.timeStamp, style: .time)
@@ -163,7 +194,7 @@ struct MessageCell : View {
 struct AvatarView : View {
     
     var withUserAvatar : UIImage
-
+    
     var body: some View {
         
         Image(uiImage: withUserAvatar)
@@ -182,7 +213,7 @@ struct MGTextField : View {
     var body: some View {
         
         HStack(spacing : 15) {
-    
+            
             TextField("Enter Message", text: $text) { (editing) in
                 self.editing = editing
             } onCommit: {
@@ -193,7 +224,7 @@ struct MGTextField : View {
             .frame(height : 45)
             .background(Color.primary.opacity(0.06))
             .clipShape(Capsule())
-
+            
             
             
             if text != "" {
@@ -210,6 +241,6 @@ struct MGTextField : View {
             
             
         }.padding(.bottom, 5)
-
+        
     }
 }

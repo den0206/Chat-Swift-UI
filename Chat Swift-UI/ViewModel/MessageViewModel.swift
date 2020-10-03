@@ -58,6 +58,8 @@ class MessageViewModel : ObservableObject {
         
     }
     
+  
+    
     func translateLanguage(source : TranslateLanguage, target : TranslateLanguage) {
         
         let options = TranslatorOptions(sourceLanguage: source, targetLanguage: target)
@@ -93,7 +95,6 @@ class MessageViewModel : ObservableObject {
 
             do {
                 let _ = try firebaseReference(.Message).document(id).collection(chatRoomId).addDocument(from: message)
-
 
             } catch(let error) {
                 print(error.localizedDescription)

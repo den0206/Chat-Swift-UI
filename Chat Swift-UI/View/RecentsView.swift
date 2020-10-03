@@ -155,7 +155,7 @@ struct RecentsView: View {
                 switch vm.modelType {
                 case .Users :
                     UsersView(chatRoomId: $vm.chatRoomId, membserIds: $vm.memberIds, withUserLang: $vm.withUserLang, withUserImage: $vm.withUserAvatar, pushNav: $vm.pushNav)
-//                    UsersView(chatRoomId: $vm.chatRoomId, membserIds: $vm.memberIds, pushNav : $vm.pushNav)
+
                 case .Edit :
                     UserEditView()
 
@@ -183,7 +183,7 @@ struct RecentsView: View {
                 
             }
         }
-        .loading(ishowing: $vm.isLoading)
+//        .loading(ishowing: $vm.isLoading)
        
     }
     
