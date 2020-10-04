@@ -12,9 +12,13 @@ import MLKit
 struct UserEditView: View {
     
     @EnvironmentObject var userInfo : UserInfo
+    @State private var user : UserViewModel = UserViewModel()
     @Environment(\.presentationMode) var presentationMode
+    
+    @State private var showPicker = false
     @State private var showAlert = false
-  
+    @State private var errorMessage = ""
+    
 
     var body: some View {
         
@@ -42,21 +46,92 @@ struct UserEditView: View {
             HStack {
                 Spacer(minLength: 0)
                 
-                Button(action: {print("present ip")}) {
-              
+                Button(action: {self.showPicker = true}) {
+                    
+                    if !(user.imageData.count == 0) {
+                        Image(uiImage: UIImage(data: user.imageData)!)
+                            .resizable()
+                            .frame(width:90, height:90)
+                            .clipShape(Circle())
+                        
+                    } else {
                         Image(uiImage: downloadImageFromData(picturedata: userInfo.user.avatarString)!)
                             .resizable()
-                            .frame(width:150, height:150)
+                            .frame(width:90, height:90)
                             .clipShape(Circle())
-                 
+                    }
+                    
+                    
+                }
+                .sheet(isPresented: $showPicker) {
+                    ImagePicker(image: $user.imageData, errorMessage : $errorMessage, showAlert : $showAlert)
                 }
                 
                 Spacer(minLength: 0)
             }
+            .padding()
             
-            /// text fields
-           
+            VStack {
+                
+                Group {
+                    
+                    VStack(alignment: .leading) {
+                        TextField("", text: $user.fullname)
+                            .onAppear {
+                                self.user.fullname = userInfo.user.name
+                            }
+                        
+                        if !user.validNameText.isEmpty {
+                          Text(user.validNameText).font(.caption).foregroundColor(.red)
+                          }
+                        
+                    }
+                    
+                    VStack(alignment: .leading) {
+                        TextField("", text : $user.email)
+                            .onAppear {
+                                self.user.email = userInfo.user.email
+                            }
+                        
+                        if !user.validEmailText.isEmpty {
+                            Text(user.validEmailText).font(.caption).foregroundColor(.red)
+                        }
+                    }
+          
+                    
+                }
+                .foregroundColor(.black)
+                .frame(width: 300)
+                .textFieldStyle(RoundedBorderTextFieldStyle())
+            
+            }
+            .padding()
+                       
             Spacer().frame(width: UIScreen.main.bounds.width, height: 30)
+            
+            
+            LangagePicker(selectrdLangage: $user.language)
+                .padding(.top,20)
+                .frame(width: UIScreen.main.bounds.width - 30)
+                .onAppear {
+                    self.user.language = userInfo.user.lang
+                }
+            
+            
+            Spacer().frame(width: UIScreen.main.bounds.width, height: 30)
+            
+            
+            Button(action: {print(user)}) {
+                Text("Save")
+                    .foregroundColor(.white)
+                    .padding(.vertical)
+                    .padding(.horizontal,40)
+                    .background(Color.green)
+                    .clipShape(Capsule())
+                    .opacity(user.didChangeStatus ? 1 : 0.6)
+                
+            }
+            .disabled(!user.didChangeStatus)
             
             Button(action: {self.showAlert = true}) {
                 Text("Log out")
@@ -85,12 +160,9 @@ struct UserEditView: View {
             }
         
             
-            LangagePicker(selectrdLangage: $userInfo.user.lang)
-                .padding(.top,20)
-                .frame(width: UIScreen.main.bounds.width - 30)
-            
-            Spacer(minLength: 0)
-            
+        }
+        .onAppear {
+            user.currentUser = userInfo.user
         }
     }
 }

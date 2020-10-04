@@ -68,17 +68,14 @@ struct MessageView: View {
                         ZStack(alignment: .center) {
                             
                             
-                            LinearGradient(gradient: Gradient(colors: [.black,.white]), startPoint: .top, endPoint: .bottom)
-                                .opacity(0.6)
+//                            LinearGradient(gradient: Gradient(colors: [.black,.white]), startPoint: .top, endPoint: .bottom)
+//                                .opacity(0.6)
                             /// blur
-//                            Color.black.opacity(0.6)
+                            Color.black.opacity(0.6)
                                 .onTapGesture {
                                     hideKeyBord()
                                 }
-                            
-                          
-                                
-                            
+                         
                             VStack(alignment: .center) {
                                 
                                 if vm.text != "" {
@@ -106,7 +103,7 @@ struct MessageView: View {
                                     
                                 }
                                 .background(Color.white)
-                                .padding(.bottom)
+//                                .padding(.bottom)
                                 
                                 
                                 

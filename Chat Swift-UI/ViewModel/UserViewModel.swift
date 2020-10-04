@@ -15,6 +15,7 @@ struct UserViewModel {
     var confirmPassword = ""
     var imageData : Data = .init(count : 0)
     var language : TranslateLanguage = .english
+    var currentUser : FBUser?
     
     var isSignUpComplete : Bool {
         if test_Mode {
@@ -31,6 +32,7 @@ struct UserViewModel {
        
     }
     
+    
     var isLoginComplete : Bool {
         
         if isEmpty(_field: email) || isEmpty(_field: password){
@@ -38,6 +40,19 @@ struct UserViewModel {
         }
         return true
     }
+    
+    var didChangeStatus : Bool {
+        
+        guard let currentUser = currentUser else {return false}
+        
+        if currentUser.name != fullname || currentUser.email != email || currentUser.lang != language  || !(self.imageData == .init(count :0)){
+            return true
+        }
+        
+        return false
+    }
+    
+    
     //MARK: - Validates
     
     func passwordsMatch(_confirmPW : String) -> Bool {
@@ -66,6 +81,8 @@ struct UserViewModel {
         
         return passwordTest.evaluate(with: password)
     }
+    
+  
     
     //MARK: - Error String
     
