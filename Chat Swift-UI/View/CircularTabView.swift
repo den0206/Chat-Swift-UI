@@ -60,7 +60,7 @@ struct CircularTab : View {
             
             Spacer(minLength: 15)
             
-            tabButton(function: {index = 2}, imageName: "translation", title: "Langages", number: 2, index: index)
+            tabButton(function: {index = 2}, imageName: "translation", title: "Languages", number: 2, index: index)
             
         }
         .padding(.top,-10)

@@ -37,7 +37,17 @@ class UserInfo : ObservableObject {
 //                }
 //            }
         })
-      
-        
+  
+    }
+    
+    func setUser(uid : String) {
+        FBFiresore.fetchFBUser(uid: uid) { (result) in
+            switch result {
+            case .failure(let error) :
+                print(error.localizedDescription)
+            case .success(let user) :
+                self.user = user
+            }
+        }
     }
 }

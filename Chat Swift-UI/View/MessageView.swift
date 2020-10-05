@@ -103,7 +103,7 @@ struct MessageView: View {
                                     
                                 }
                                 .background(Color.white)
-//                                .padding(.bottom)
+                                .padding(.bottom)
                                 
                                 
                                 

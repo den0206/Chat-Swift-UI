@@ -47,6 +47,8 @@ enum FBFiresore {
         }
     }
     
+   
+    
     fileprivate static func getDocument(ref : DocumentReference, comletion :  @escaping(Result<[String : Any] , Error>) -> Void) {
         
         ref.getDocument { (snaoshot, error) in

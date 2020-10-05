@@ -11,8 +11,8 @@ import MLKit
 struct FBUser : Hashable{
     
     let uid : String
-    let name : String
-    let email : String
+    var name : String
+    var email : String
     var avatarString : String
     var lang : TranslateLanguage = .japanese
     

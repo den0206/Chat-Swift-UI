@@ -31,10 +31,7 @@ struct LangagePicker: View {
             .frame(width: 200)
             .clipped()
             .labelsHidden()
-            
-            
-            
- 
+  
         }
 
     }
