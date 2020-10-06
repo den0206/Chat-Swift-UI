@@ -15,6 +15,8 @@ struct RecentsView: View {
     @StateObject var vm : RecentsViewModel = RecentsViewModel()
     @State private var didAppear = false
     @Binding var showTab : Bool
+
+    @State private var withUserId = ""
  
     var body: some View {
         
@@ -77,9 +79,15 @@ struct RecentsView: View {
                             NavigationLink(destination: MessageView( chatRoomId: $vm.chatRoomId, memberIds: $vm.memberIds, withUserAvatar: $vm.withUserAvatar, withUserLang: $vm.withUserLang, showTab: $showTab), isActive: $vm.pushNav) {
                                 
                                 /// BUG ! No active push nav when first Touch because exclude recents..
-
-                                RecentCell(recent: recent)
-                                    .contentShape(Rectangle())
+                                
+                                RecentCell(recent: recent, withUserId: $withUserId, function: {
+                                    
+                                    /// profile
+                                    self.vm.modelType = .Profile
+                                    self.vm.showModel = true
+                                    
+                                })
+                                .contentShape(Rectangle())
                                     .offset(x: recent.offSet)
                                     .onTapGesture {
                                         vm.withUserLang = recent.withUserLang
@@ -112,6 +120,7 @@ struct RecentsView: View {
                                             }
                                             
                                         }))
+                                   
                                     
                                     .animation(.default)
                             }
@@ -159,6 +168,9 @@ struct RecentsView: View {
                 case .Edit :
                     UserEditView()
 
+                case .Profile:
+                    
+                    UserProfileView(uid: withUserId)
                 }
             })
             .alert(isPresented: $vm.showAlert, content: { () -> Alert in
@@ -207,6 +219,10 @@ struct RecentsView: View {
 struct RecentCell : View {
     
     var recent : Recent
+    @Binding var withUserId : String
+    var function : () -> Void
+    
+   
    
     var body: some View {
         
@@ -222,6 +238,12 @@ struct RecentCell : View {
                         .resizable()
                         .frame(width: 60, height: 60)
                         .clipShape(Circle())
+                        .onTapGesture {
+                            /// profile View
+                            self.withUserId = recent.withUserId
+                            self.function()
+                        }
+                        
                 }
                 
                 VStack(alignment: .leading, spacing: 12) {

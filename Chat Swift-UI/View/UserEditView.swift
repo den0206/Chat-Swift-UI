@@ -191,6 +191,7 @@ struct UserEditView: View {
             if loading {
               
                 ZStack(alignment: .center) {
+                    
                     Color.black.opacity(0.6)
                     
                     ProgressView("Loding...")

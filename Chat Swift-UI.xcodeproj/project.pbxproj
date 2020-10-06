@@ -32,6 +32,8 @@
 		3AB27EC425111BE3000646DC /* Global Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AB27EC325111BE3000646DC /* Global Extensions.swift */; };
 		3AB350002518526500F47796 /* MessageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AB34FFF2518526500F47796 /* MessageViewModel.swift */; };
 		3ABA96C9251E43A9008826B1 /* LangagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ABA96C8251E43A9008826B1 /* LangagePicker.swift */; };
+		3AC442F9252C950000AE463F /* UserProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AC442F8252C950000AE463F /* UserProfileView.swift */; };
+		3AC44301252C95BE00AE463F /* UserProfileViewXModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AC44300252C95BE00AE463F /* UserProfileViewXModel.swift */; };
 		3AC77470251B912A00C0576F /* UserEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AC7746F251B912A00C0576F /* UserEditView.swift */; };
 		3ACB76AF251239780016F17C /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ACB76AE251239780016F17C /* LoginView.swift */; };
 		3ACB76B225123F190016F17C /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ACB76B125123F190016F17C /* AuthViewModel.swift */; };
@@ -81,6 +83,8 @@
 		3AB27EC325111BE3000646DC /* Global Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Global Extensions.swift"; sourceTree = "<group>"; };
 		3AB34FFF2518526500F47796 /* MessageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageViewModel.swift; sourceTree = "<group>"; };
 		3ABA96C8251E43A9008826B1 /* LangagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LangagePicker.swift; sourceTree = "<group>"; };
+		3AC442F8252C950000AE463F /* UserProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileView.swift; sourceTree = "<group>"; };
+		3AC44300252C95BE00AE463F /* UserProfileViewXModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileViewXModel.swift; sourceTree = "<group>"; };
 		3AC7746F251B912A00C0576F /* UserEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserEditView.swift; sourceTree = "<group>"; };
 		3ACB76AE251239780016F17C /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		3ACB76B125123F190016F17C /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
@@ -198,6 +202,7 @@
 				3AE9E7552513800300AD001D /* RecentsView.swift */,
 				3A89694A2517344F00450B49 /* UsersView.swift */,
 				3A484CEA2517949A004500C1 /* MessageView.swift */,
+				3AC442F8252C950000AE463F /* UserProfileView.swift */,
 				3AC7746F251B912A00C0576F /* UserEditView.swift */,
 				3ABA96C8251E43A9008826B1 /* LangagePicker.swift */,
 				3AD36D37251ED1A1004934EC /* DownloadLangageView.swift */,
@@ -238,6 +243,7 @@
 				3A29E8B72518774500BCFEF8 /* RecentsViewModel.swift */,
 				3AB34FFF2518526500F47796 /* MessageViewModel.swift */,
 				3AD36D3E251ED75F004934EC /* DownloadLangageViewModel.swift */,
+				3AC44300252C95BE00AE463F /* UserProfileViewXModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -434,10 +440,12 @@
 				3AB27EC425111BE3000646DC /* Global Extensions.swift in Sources */,
 				3A119BA12520334600300985 /* TranslateLanguageView.swift in Sources */,
 				3ABA96C9251E43A9008826B1 /* LangagePicker.swift in Sources */,
+				3AC44301252C95BE00AE463F /* UserProfileViewXModel.swift in Sources */,
 				3AB350002518526500F47796 /* MessageViewModel.swift in Sources */,
 				3A89694F25173C0000450B49 /* UsersViewModel.swift in Sources */,
 				3A47ADB0250E468300CF3E15 /* Message.swift in Sources */,
 				3A52AC54250E418700997131 /* ContentView.swift in Sources */,
+				3AC442F9252C950000AE463F /* UserProfileView.swift in Sources */,
 				3AF669942515DF45006C707B /* FBFirestore.swift in Sources */,
 				3AB27EC225111A24000646DC /* exRecentsView.swift in Sources */,
 				3A52AC52250E418700997131 /* Chat_Swift_UIApp.swift in Sources */,

@@ -18,6 +18,7 @@ enum RecentViewAlert {
 enum ModelType {
     case Users
     case Edit
+    case Profile
 }
 
 class RecentsViewModel : ObservableObject {

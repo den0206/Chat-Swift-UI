@@ -31,7 +31,6 @@ class MessageViewModel : ObservableObject {
             
             guard !snapshot.isEmpty else {print("Empty") ; return}
             
-            self.isLoading = true
             snapshot.documentChanges.forEach { (doc) in
                 
                 switch doc.type {
@@ -42,7 +41,7 @@ class MessageViewModel : ObservableObject {
                     DispatchQueue.main.async {
                         self.messages.append(message!)
                         if self.messages.count == snapshot.documents.count {
-                            self.isLoading = false
+                           
                             print("Reach Last!")
                         }
                        
@@ -89,7 +88,7 @@ class MessageViewModel : ObservableObject {
     func sendMessage(chatRoomId : String, memberIds : [String], senderId : String) {
 
         
-        let message = Message(userId: senderId, msg: text, timeStamp: Date())
+        let message = Message(userId: senderId, msg: text, translated: translated, timeStamp: Date())
 
         for id in memberIds {
 
@@ -108,8 +107,6 @@ class MessageViewModel : ObservableObject {
 
         text = ""
 
-
-        
     }
     
     

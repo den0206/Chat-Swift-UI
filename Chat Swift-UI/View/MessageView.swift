@@ -66,10 +66,7 @@ struct MessageView: View {
                         
                         
                         ZStack(alignment: .center) {
-                            
-                            
-//                            LinearGradient(gradient: Gradient(colors: [.black,.white]), startPoint: .top, endPoint: .bottom)
-//                                .opacity(0.6)
+                      
                             /// blur
                             Color.black.opacity(0.6)
                                 .onTapGesture {
@@ -172,6 +169,11 @@ struct MessageCell : View {
                     .background(message.userId == currentId ? Color.green : Color.gray)
                     /// tail
                     .clipShape(BubbleShape(myMessage: message.userId == currentId))
+                    .contextMenu{
+                        /// translated language
+                        Text(message.translated)
+                            .fontWeight(.bold)
+                    }
                 
                 Text(message.timeStamp, style: .time)
                     .font(.caption2)
