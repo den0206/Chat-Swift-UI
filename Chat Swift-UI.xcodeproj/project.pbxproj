@@ -25,6 +25,8 @@
 		3A52AC56250E418900997131 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3A52AC55250E418900997131 /* Assets.xcassets */; };
 		3A52AC59250E418900997131 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3A52AC58250E418900997131 /* Preview Assets.xcassets */; };
 		3A52AC62250E41A500997131 /* exHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A52AC61250E41A500997131 /* exHomeView.swift */; };
+		3A5D3606252F463B006414F1 /* AVfViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A5D3605252F463B006414F1 /* AVfViewModel.swift */; };
+		3A5D3609252F4A13006414F1 /* AVView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A5D3608252F4A13006414F1 /* AVView.swift */; };
 		3A7260DD250E4340001408A9 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3A7260DC250E4340001408A9 /* GoogleService-Info.plist */; };
 		3A89694B2517344F00450B49 /* UsersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A89694A2517344F00450B49 /* UsersView.swift */; };
 		3A89694F25173C0000450B49 /* UsersViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A89694E25173C0000450B49 /* UsersViewModel.swift */; };
@@ -76,6 +78,8 @@
 		3A52AC58250E418900997131 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		3A52AC5A250E418900997131 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3A52AC61250E41A500997131 /* exHomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = exHomeView.swift; sourceTree = "<group>"; };
+		3A5D3605252F463B006414F1 /* AVfViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVfViewModel.swift; sourceTree = "<group>"; };
+		3A5D3608252F4A13006414F1 /* AVView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVView.swift; sourceTree = "<group>"; };
 		3A7260DC250E4340001408A9 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		3A89694A2517344F00450B49 /* UsersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersView.swift; sourceTree = "<group>"; };
 		3A89694E25173C0000450B49 /* UsersViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersViewModel.swift; sourceTree = "<group>"; };
@@ -198,6 +202,7 @@
 			children = (
 				3AC7746E251B910B00C0576F /* examples */,
 				3ACB76AD251239660016F17C /* Auth */,
+				3A5D35FF252F45DE006414F1 /* AVfoundation */,
 				3ACBEC522517285500DB127A /* CircularTabView.swift */,
 				3AE9E7552513800300AD001D /* RecentsView.swift */,
 				3A89694A2517344F00450B49 /* UsersView.swift */,
@@ -209,6 +214,15 @@
 				3A119BA02520334600300985 /* TranslateLanguageView.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		3A5D35FF252F45DE006414F1 /* AVfoundation */ = {
+			isa = PBXGroup;
+			children = (
+				3A5D3605252F463B006414F1 /* AVfViewModel.swift */,
+				3A5D3608252F4A13006414F1 /* AVView.swift */,
+			);
+			path = AVfoundation;
 			sourceTree = "<group>";
 		};
 		3AC7746E251B910B00C0576F /* examples */ = {
@@ -425,12 +439,14 @@
 				3AC77470251B912A00C0576F /* UserEditView.swift in Sources */,
 				3A52AC62250E41A500997131 /* exHomeView.swift in Sources */,
 				3A2E85B52515A28500F66910 /* UserViewModel.swift in Sources */,
+				3A5D3606252F463B006414F1 /* AVfViewModel.swift in Sources */,
 				3ACB76AF251239780016F17C /* LoginView.swift in Sources */,
 				3A18A80825137239002556DF /* Service.swift in Sources */,
 				3AD36D3F251ED75F004934EC /* DownloadLangageViewModel.swift in Sources */,
 				3AF6698F2515DDF1006C707B /* FBKeys.swift in Sources */,
 				3AD36D38251ED1A1004934EC /* DownloadLangageView.swift in Sources */,
 				3ACB76B4251242C40016F17C /* SignUpView.swift in Sources */,
+				3A5D3609252F4A13006414F1 /* AVView.swift in Sources */,
 				3A29E8B82518774500BCFEF8 /* RecentsViewModel.swift in Sources */,
 				3AF6698C2515DCFB006C707B /* FBUser.swift in Sources */,
 				3AF669982515E18F006C707B /* FBFirestoreError.swift in Sources */,

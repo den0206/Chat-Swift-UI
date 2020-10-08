@@ -21,6 +21,9 @@ struct CircularTabView: View {
                 case 0 :
                     RecentsView(showTab : $showTab)
                     
+                case 1 :
+                    AVView()
+                    
                 case 2:
                     DownloadLangageView()
                     
