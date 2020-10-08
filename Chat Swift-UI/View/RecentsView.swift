@@ -8,6 +8,11 @@
 import SwiftUI
 import Firebase
 
+//extension Identifiable where Self: Hashable {
+//    typealias ID = Self
+//    var id: Self { self }
+//}
+//
 
 struct RecentsView: View {
     
@@ -234,6 +239,9 @@ struct RecentCell : View {
                         .fill(Color.gray)
                         .frame(width: 60, height: 60)
                 } else {
+                    
+                    //MARK: - Because of Memoryweak
+
                     Image(uiImage: downloadImageFromData(picturedata: recent.withUserAvatar)!)
                         .resizable()
                         .frame(width: 60, height: 60)
