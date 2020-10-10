@@ -234,25 +234,25 @@ struct RecentCell : View {
         VStack {
             HStack(spacing : 12) {
                 
-                if recent.withUserAvatar == "" {
-                    Circle()
-                        .fill(Color.gray)
-                        .frame(width: 60, height: 60)
-                } else {
-                    
-                    //MARK: - Because of Memoryweak
-
-                    Image(uiImage: downloadImageFromData(picturedata: recent.withUserAvatar)!)
-                        .resizable()
-                        .frame(width: 60, height: 60)
-                        .clipShape(Circle())
-                        .onTapGesture {
-                            /// profile View
-                            self.withUserId = recent.withUserId
-                            self.function()
-                        }
-                        
-                }
+//                if recent.withUserAvatar == "" {
+//                    Circle()
+//                        .fill(Color.gray)
+//                        .frame(width: 60, height: 60)
+//                } else {
+//
+//                    //MARK: - Because of Memoryweak
+//
+//                    Image(uiImage: downloadImageFromData(picturedata: recent.withUserAvatar)!)
+//                        .resizable()
+//                        .frame(width: 60, height: 60)
+//                        .clipShape(Circle())
+//                        .onTapGesture {
+//                            /// profile View
+//                            self.withUserId = recent.withUserId
+//                            self.function()
+//                        }
+//
+//                }
                 
                 VStack(alignment: .leading, spacing: 12) {
                     HStack(spacing : 5) {

@@ -15,11 +15,15 @@ struct AVView: View {
         VStack {
             /// no photo
             if vm.image == nil {
-                Spacer()
+               
                 ZStack(alignment: .bottom) {
                     /// Z1
-                    CAlayerView(caLayer: vm.previewLayer)
+                    if vm.previewLayer != nil  {
+                        CAlayerView(caLayer: vm.previewLayer)
+
+                    }
                     
+                    Spacer()
                     /// Z2
                     Button(action: {
                         self.vm.takePhoto()
@@ -29,7 +33,7 @@ struct AVView: View {
                             .resizable()
                             .frame(width: 80, height: 80, alignment: .center)
                     }
-                    .padding(.bottom,50)
+                    .padding(.bottom,30)
                 }
                 .onAppear {
                     self.vm.startSession()
@@ -37,23 +41,44 @@ struct AVView: View {
                 .onDisappear{
                     self.vm.endSession()
                 }
-                Spacer()
+           
             } else {
                 /// exist photo
                 ZStack(alignment: .topLeading) {
                     /// Z1
                     VStack {
+                        
                         Spacer()
                         
-                        Image(uiImage: vm.image!)
-                            .resizable()
-                            .scaledToFill()
-                            .aspectRatio(contentMode: .fit)
-                        
+                        if vm.translated != nil {
+                            Image(uiImage: vm.image!)
+                                .resizable()
+                                .scaledToFill()
+                                .aspectRatio(contentMode: .fit)
+                                .overlay(
+                                    
+                                    VStack {
+                                        Text(vm.translated!)
+                                            .foregroundColor(.white)
+                                            .background(Color.green)
+                                    }
+                                    
+                                    
+                                    
+                                )
+                            
+                        }
+                    
                         Spacer()
                     }
+                    
+                    
+                    
                     /// Z2
-                    Button(action: { self.vm.image = nil}) {
+                    Button(action: {
+                        self.vm.image = nil
+                        self.vm.translated = nil
+                    }) {
                         Image(systemName: "xmark.circle.fill")
                             .renderingMode(.original)
                             .resizable()

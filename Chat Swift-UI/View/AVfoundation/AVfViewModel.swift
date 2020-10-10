@@ -9,6 +9,26 @@ import UIKit
 import SwiftUI
 import Combine
 import AVFoundation
+import MLKit
+
+func imageOrientation(
+  deviceOrientation: UIDeviceOrientation,
+  cameraPosition: AVCaptureDevice.Position
+) -> UIImage.Orientation {
+  switch deviceOrientation {
+  case .portrait:
+    return cameraPosition == .front ? .leftMirrored : .right
+  case .landscapeLeft:
+    return cameraPosition == .front ? .downMirrored : .up
+  case .portraitUpsideDown:
+    return cameraPosition == .front ? .rightMirrored : .left
+  case .landscapeRight:
+    return cameraPosition == .front ? .upMirrored : .down
+  case .faceDown, .faceUp, .unknown:
+    return .up
+  }
+}
+     
 
 class AVfViewModel : NSObject, AVCaptureVideoDataOutputSampleBufferDelegate,ObservableObject {
     
@@ -16,38 +36,46 @@ class AVfViewModel : NSObject, AVCaptureVideoDataOutputSampleBufferDelegate,Obse
     @Published var showAlert = false
     @Published var alert : Alert = Alert(title: Text(""))
     
+    private var englishJapaneseTranslator : Translator?
+    @Published var translated : String?
+//    @Published var text : SwiftUI.Text = Text("")
+   
+    
     var previewLayer : CALayer!
     
     private var _takePhoto : Bool = false
     private let captureSession = AVCaptureSession()
     private var capturepDevice : AVCaptureDevice!
+    private let photoSetting = AVCapturePhotoSettings()
     
     
     override init() {
         super.init()
-        prepareCamera()
         beginSession()
     }
     
     func takePhoto() {
         _takePhoto = true
+//       photoSetting.flashMode = .auto
+//       photoSetting.isAutoVirtualDeviceFusionEnabled = true
+//        photoSetting.
     }
     
     /// init
-    private func prepareCamera() {
+
+    
+    private func beginSession()  {
         captureSession.sessionPreset = .photo
         
         if let availableDevice = AVCaptureDevice.DiscoverySession(deviceTypes: [.builtInWideAngleCamera], mediaType: AVMediaType.video, position: .back).devices.first {
             capturepDevice = availableDevice
         } else {
-//            self.errorMessage = "カメラの動作する端末が必要です"
             self.alert = Alert(title: Text("カメラの動作する端末が必要です"), message: nil, dismissButton: .default(Text("OK")))
             self.showAlert = true
             return
         }
-    }
-    
-    private func beginSession()  {
+        
+        
         do {
             let captureDeviceInput = try AVCaptureDeviceInput(device: capturepDevice)
             captureSession.addInput(captureDeviceInput)
@@ -85,12 +113,19 @@ class AVfViewModel : NSObject, AVCaptureVideoDataOutputSampleBufferDelegate,Obse
     /// delegate  capture
     
     func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
+        
         if _takePhoto {
             _takePhoto = false
             if let image = getImageFromSampleBuffer(buffer: sampleBuffer) {
                 DispatchQueue.main.async {
                     self.image = image
+                    self.processText(image: image)
+                    
+                    
                 }
+               
+                
+               
             }
         }
     }
@@ -109,4 +144,61 @@ class AVfViewModel : NSObject, AVCaptureVideoDataOutputSampleBufferDelegate,Obse
         
         return nil
     }
+    
+    func processText(image : UIImage) {
+        let visionImage = VisionImage(image: image)
+        visionImage.orientation = image.imageOrientation
+        let textRecoganizer = TextRecognizer.textRecognizer()
+        
+        textRecoganizer.process(visionImage) { [self] (result, error) in
+            guard error == nil, let result = result else {
+                print("[ERROR]: " + error.debugDescription)
+                return
+            }
+            
+            let imageSize = image.size
+            let aspectRatio = imageSize.width / imageSize.height
+            let previewFrame = CGRect(x: self.previewLayer.frame.origin.x, y: self.previewLayer.frame.origin.y, width: self.previewLayer.frame.width * aspectRatio, height: self.previewLayer.frame.height)
+            let xOffSet = (self.previewLayer.frame.width - previewFrame.width) * 0.5
+            let widthRate = previewFrame.width / imageSize.height;
+            let heightRate = previewFrame.height / imageSize.width;
+            
+            for block in result.blocks {
+                
+                let blockText = block.text
+                let frame = block.frame
+               
+                if frame.width < 100 || frame.height < 100 {
+                    continue
+                }
+                
+                let option = TranslatorOptions(sourceLanguage: .english, targetLanguage: .japanese)
+                self.englishJapaneseTranslator = Translator.translator(options: option)
+                
+                self.englishJapaneseTranslator?.translate(blockText, completion: { (translated, error) in
+                    
+                    guard error == nil, let translated = translated else {
+                        print("[ERROR]: " + error.debugDescription)
+                        return
+                    }
+                    
+                    let tFrame = CGRect(x: xOffSet + frame.origin.x * widthRate, y: frame.origin.y * heightRate, width: frame.width * widthRate, height: frame.height * heightRate)
+                    
+                    
+                        self.translated = translated
+                  
+//                    print(self.translated)
+//                    self.translated = translated
+                    
+                    
+                    
+                })
+            }
+            
+        }
+    }
+    
+    /// translator
+    
+  
 }
