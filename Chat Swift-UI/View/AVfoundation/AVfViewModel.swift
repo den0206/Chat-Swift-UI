@@ -38,6 +38,7 @@ class AVfViewModel : NSObject, AVCaptureVideoDataOutputSampleBufferDelegate,Obse
     
     private var englishJapaneseTranslator : Translator?
     @Published var translated : String?
+    @Published var tframe : CGRect?
 //    @Published var text : SwiftUI.Text = Text("")
    
     
@@ -88,6 +89,7 @@ class AVfViewModel : NSObject, AVCaptureVideoDataOutputSampleBufferDelegate,Obse
         
         let dataOutput = AVCaptureVideoDataOutput()
         dataOutput.videoSettings = [kCVPixelBufferPixelFormatTypeKey as String:kCVPixelFormatType_32BGRA]
+        dataOutput.alwaysDiscardsLateVideoFrames = true
         
         if captureSession.canAddOutput(dataOutput) {
             captureSession.addOutput(dataOutput)
@@ -120,7 +122,7 @@ class AVfViewModel : NSObject, AVCaptureVideoDataOutputSampleBufferDelegate,Obse
                 DispatchQueue.main.async {
                     self.image = image
                     self.processText(image: image)
-                    
+                
                     
                 }
                
@@ -159,6 +161,7 @@ class AVfViewModel : NSObject, AVCaptureVideoDataOutputSampleBufferDelegate,Obse
             let imageSize = image.size
             let aspectRatio = imageSize.width / imageSize.height
             let previewFrame = CGRect(x: self.previewLayer.frame.origin.x, y: self.previewLayer.frame.origin.y, width: self.previewLayer.frame.width * aspectRatio, height: self.previewLayer.frame.height)
+            print(previewFrame)
             let xOffSet = (self.previewLayer.frame.width - previewFrame.width) * 0.5
             let widthRate = previewFrame.width / imageSize.height;
             let heightRate = previewFrame.height / imageSize.width;
@@ -182,14 +185,11 @@ class AVfViewModel : NSObject, AVCaptureVideoDataOutputSampleBufferDelegate,Obse
                         return
                     }
                     
-                    let tFrame = CGRect(x: xOffSet + frame.origin.x * widthRate, y: frame.origin.y * heightRate, width: frame.width * widthRate, height: frame.height * heightRate)
+                    self.translated = translated
+                    self.tframe = frame
                     
-                    
-                        self.translated = translated
-                  
-//                    print(self.translated)
-//                    self.translated = translated
-                    
+//                    self.tframe =  CGRect(x: xOffSet + frame.origin.x * widthRate, y: frame.origin.y * heightRate, width: frame.width * widthRate, height: frame.height * heightRate)
+                    print(tframe)
                     
                     
                 })

@@ -41,7 +41,6 @@ struct AVView: View {
                 .onDisappear{
                     self.vm.endSession()
                 }
-           
             } else {
                 /// exist photo
                 ZStack(alignment: .topLeading) {
@@ -57,16 +56,23 @@ struct AVView: View {
                                 .aspectRatio(contentMode: .fit)
                                 .overlay(
                                     
-                                    VStack {
-                                        Text(vm.translated!)
-                                            .foregroundColor(.white)
-                                            .background(Color.green)
-                                    }
+                                    Rectangle()
+                                        .fill(Color.green)
+                                        .position(<#T##position: CGPoint##CGPoint#>)
                                     
-                                    
-                                    
+//                                        Text(vm.translated!)
+//                                            .foregroundColor(.white)
+//                                            .background(Color.green)
+//                                            .position(x: vm.tframe!.minX, y: vm.tframe!.maxY)
+                               
                                 )
                             
+                        } else {
+                            Image(uiImage: vm.image!)
+                                .resizable()
+                                .scaledToFill()
+                                .aspectRatio(contentMode: .fit)
+                              
                         }
                     
                         Spacer()
