@@ -10,6 +10,8 @@ import SwiftUI
 struct AVView: View {
     
     @ObservedObject private var vm = AVfViewModel()
+    @State private var  baseZoomFactor : CGFloat = 1.0
+
    
     var body: some View {
        
@@ -17,38 +19,69 @@ struct AVView: View {
                 /// Z1
                 if vm.previewLayer != nil  {
                     CAlayerView(caLayer: vm.previewLayer)
-                        .onTapGesture {
-                            self.vm.image = nil
-                            self.vm.translated = nil
-                        }
-                        
-               
+                        .scaleEffect(baseZoomFactor)
+                        .gesture(
+                            MagnificationGesture()
+                                .onChanged { value in
+                                    self.baseZoomFactor = value
+                                }
+                        )
+                       
+                    
+                    
                 }
                 
-                if vm.translated != nil {
-                    
+                if !vm.translated.isEmpty {
                     GeometryReader { geo in
+                        ScrollView(.vertical, showsIndicators: false) {
+                            
+                            Spacer().frame(width: geo.size.width, height: geo.size.height / 2)
+                            
+                            VStack(spacing : 3) {
+                                ForEach(vm.translated, id : \.self) { translate in
+                                    
+                                    Text(translate)
+                                        .foregroundColor(.white)
+                                        .background(Color.green)
+                                    
+                                    
+                                }
+                            }
+                            
+                            
+                        }
+                        .onTapGesture {
+                            self.vm.translated = [String]()
+                        }
                         
-                        Text(vm.translated!)
-                            .foregroundColor(.white)
-                            .background(Color.green)
-                            .position(x: geo.size.width / 2, y: geo.size.height / 4)
                     }
-                    
-                        
+     
                 }
                 
                 Spacer()
-                /// Z2
-                Button(action: {
-                    self.vm.takePhoto()
-                }) {
-                    Image(systemName: "camera.circle.fill")
-                        .renderingMode(.original)
-                        .resizable()
-                        .frame(width: 80, height: 80, alignment: .center)
+                
+                HStack {
+                    Spacer()
+                    /// Z2
+                    Button(action: {
+                        self.vm.translated = [String]()
+                        self.vm.takePhoto()
+                    }) {
+                        Text("Scan")
+                            .fontWeight(.bold)
+                            .foregroundColor(.white)
+                            .padding()
+                            .background(Color.red)
+                            .clipShape(Circle())
+//                        Image(systemName: "camera.circle.fill")
+//                            .renderingMode(.original)
+//                            .resizable()
+//                            .frame(width: 80, height: 80, alignment: .center)
+                    }
+                    .padding()
+                    
                 }
-                .padding(.bottom,30)
+             
                 Spacer()
             }
             .edgesIgnoringSafeArea(.all)

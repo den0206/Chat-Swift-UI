@@ -37,9 +37,8 @@ class AVfViewModel : NSObject, AVCaptureVideoDataOutputSampleBufferDelegate,Obse
     @Published var alert : Alert = Alert(title: Text(""))
     
     private var englishJapaneseTranslator : Translator?
-    @Published var translated : String?
+    @Published var translated : [String] = [String]()
     @Published var tframe : CGRect?
-    //    @Published var text : SwiftUI.Text = Text("")
     
     
     var previewLayer : CALayer!
@@ -57,19 +56,22 @@ class AVfViewModel : NSObject, AVCaptureVideoDataOutputSampleBufferDelegate,Obse
     
     func takePhoto() {
         _takePhoto = true
-        //       photoSetting.flashMode = .auto
-        //       photoSetting.isAutoVirtualDeviceFusionEnabled = true
-        //        photoSetting.
     }
     
     /// init
     
     
     private func beginSession()  {
-        captureSession.sessionPreset = .vga640x480
+        captureSession.sessionPreset = .high
         
         if let availableDevice = AVCaptureDevice.DiscoverySession(deviceTypes: [.builtInWideAngleCamera], mediaType: AVMediaType.video, position: .back).devices.first {
             capturepDevice = availableDevice
+            capturepDevice.isFocusModeSupported(.continuousAutoFocus)
+            
+            try! availableDevice.lockForConfiguration()
+            availableDevice.focusMode = .continuousAutoFocus
+            availableDevice.unlockForConfiguration()
+            
         } else {
             self.alert = Alert(title: Text("カメラの動作する端末が必要です"), message: nil, dismissButton: .default(Text("OK")))
             self.showAlert = true
@@ -92,6 +94,7 @@ class AVfViewModel : NSObject, AVCaptureVideoDataOutputSampleBufferDelegate,Obse
         let dataOutput = AVCaptureVideoDataOutput()
         dataOutput.videoSettings = [kCVPixelBufferPixelFormatTypeKey as String:kCVPixelFormatType_32BGRA]
         dataOutput.alwaysDiscardsLateVideoFrames = true
+        
         
         if captureSession.canAddOutput(dataOutput) {
             captureSession.addOutput(dataOutput)
@@ -124,8 +127,8 @@ class AVfViewModel : NSObject, AVCaptureVideoDataOutputSampleBufferDelegate,Obse
             visionImage.orientation =  imageOrientation(deviceOrientation:.portrait, cameraPosition: .back)
             
             let textRecoganizer = TextRecognizer.textRecognizer()
-        
-     
+            
+            
             textRecoganizer.process(visionImage) { (result, error) in
                 
                 guard error == nil, let result = result else {
@@ -133,34 +136,41 @@ class AVfViewModel : NSObject, AVCaptureVideoDataOutputSampleBufferDelegate,Obse
                     return
                 }
                 
-                
-                let option = TranslatorOptions(sourceLanguage: .english, targetLanguage: .japanese)
-                self.englishJapaneseTranslator = Translator.translator(options: option)
-                
-                self.englishJapaneseTranslator?.translate(result.text, completion: { (translated, error) in
+                for block in result.blocks {
                     
-                    guard error == nil, let translated = translated else {
-                        print("[ERROR]: " + error.debugDescription)
-                        return
+                    let blockText = block.text
+                    
+                    if block.frame.width < 100 || block.frame.height < 100 {
+                        continue
                     }
+                   
+                    let option = TranslatorOptions(sourceLanguage: .english, targetLanguage: .japanese)
+                    self.englishJapaneseTranslator = Translator.translator(options: option)
                     
-                    DispatchQueue.main.async {
-                        self.translated = translated
-                        print(translated)
-                    }
+                    self.englishJapaneseTranslator?.translate(blockText, completion: { (translated, error) in
+                        
+                        guard error == nil, let translated = translated else {
+                            print("[ERROR]: " + error.debugDescription)
+                            return
+                        }
+                        
+                        DispatchQueue.main.async {
+                            self.translated.append(translated)
+                            print( self.translated)
+                            
+                        }
+      
+                    })
                     
-                    
-                    
-                })
-            
-            
-            
-            
-            
+                }
+                
+                
+                
+                
+            }
         }
-        }
-       
-       
+        
+        
         
         //        if _takePhoto {
         //            _takePhoto = false
@@ -231,7 +241,7 @@ class AVfViewModel : NSObject, AVCaptureVideoDataOutputSampleBufferDelegate,Obse
                         return
                     }
                     
-                    self.translated = translated
+//                    self.translated = translated
                     self.tframe = frame
                     
 //                    self.tframe =  CGRect(x: xOffSet + frame.origin.x * widthRate, y: frame.origin.y * heightRate, width: frame.width * widthRate, height: frame.height * heightRate)

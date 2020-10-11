@@ -101,33 +101,51 @@ struct tabButton : View {
                             .foregroundColor(.gray)
                             .frame(width: 30, height: 30)
                     }
-                  
-                       
+                    
+                    
                 } else {
-                    if systemImageName != nil {
-                        Image(systemName: systemImageName!)
-                            .frame(width: 25, height: 23)
-                            .foregroundColor(.white)
-                            .padding()
-                            .background(Color.green)
-                            .clipShape(Circle())
-                            .offset(y : -20)
-                            .padding(.bottom, 30)
-                    } else {
-                        Image(imageName!)
-                            .resizable()
-                            .renderingMode(.template)
-                            .foregroundColor(.white)
-                            .frame(width: 30, height: 30)
-                            .padding()
-                            .background(Color.green)
-                            .clipShape(Circle())
-                            .offset(y : -20)
-                            .padding(.bottom, 30)
+                   
+                        
+                        if systemImageName != nil {
                             
-                    }
-                
-                       
+                            /// Scan 以外
+                            
+                            if index != 1 {
+                            Image(systemName: systemImageName!)
+                                .frame(width: 25, height: 23)
+                                .foregroundColor(.white)
+                                .padding()
+                                .background(Color.green)
+                                .clipShape(Circle())
+                                .offset(y : -20)
+                                .padding(.bottom, 30)
+                            } else {
+                                Image(systemName: systemImageName!)
+                                    .frame(width: 25, height: 23)
+                                    .foregroundColor(.white)
+                                    .padding()
+                                    .background(Color.green)
+                                    .clipShape(Circle())
+                                    .padding(.bottom, 30)
+                            }
+                        } else {
+                            
+                            Image(imageName!)
+                                .resizable()
+                                .renderingMode(.template)
+                                .foregroundColor(.white)
+                                .frame(width: 30, height: 30)
+                                .padding()
+                                .background(Color.green)
+                                .clipShape(Circle())
+                                .offset(y : -20)
+                                .padding(.bottom, 30)
+                            
+                            
+                            
+                        }
+                    
+                    
                     
                     Text(title)
                         .foregroundColor(Color.black.opacity(0.8))
