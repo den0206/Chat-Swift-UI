@@ -12,23 +12,23 @@ import AVFoundation
 import MLKit
 
 func imageOrientation(
-  deviceOrientation: UIDeviceOrientation,
-  cameraPosition: AVCaptureDevice.Position
+    deviceOrientation: UIDeviceOrientation,
+    cameraPosition: AVCaptureDevice.Position
 ) -> UIImage.Orientation {
-  switch deviceOrientation {
-  case .portrait:
-    return cameraPosition == .front ? .leftMirrored : .right
-  case .landscapeLeft:
-    return cameraPosition == .front ? .downMirrored : .up
-  case .portraitUpsideDown:
-    return cameraPosition == .front ? .rightMirrored : .left
-  case .landscapeRight:
-    return cameraPosition == .front ? .upMirrored : .down
-  case .faceDown, .faceUp, .unknown:
-    return .up
-  }
+    switch deviceOrientation {
+    case .portrait:
+        return cameraPosition == .front ? .leftMirrored : .right
+    case .landscapeLeft:
+        return cameraPosition == .front ? .downMirrored : .up
+    case .portraitUpsideDown:
+        return cameraPosition == .front ? .rightMirrored : .left
+    case .landscapeRight:
+        return cameraPosition == .front ? .upMirrored : .down
+    case .faceDown, .faceUp, .unknown:
+        return .up
+    }
 }
-     
+
 
 class AVfViewModel : NSObject, AVCaptureVideoDataOutputSampleBufferDelegate,ObservableObject {
     
@@ -39,8 +39,8 @@ class AVfViewModel : NSObject, AVCaptureVideoDataOutputSampleBufferDelegate,Obse
     private var englishJapaneseTranslator : Translator?
     @Published var translated : String?
     @Published var tframe : CGRect?
-//    @Published var text : SwiftUI.Text = Text("")
-   
+    //    @Published var text : SwiftUI.Text = Text("")
+    
     
     var previewLayer : CALayer!
     
@@ -57,16 +57,16 @@ class AVfViewModel : NSObject, AVCaptureVideoDataOutputSampleBufferDelegate,Obse
     
     func takePhoto() {
         _takePhoto = true
-//       photoSetting.flashMode = .auto
-//       photoSetting.isAutoVirtualDeviceFusionEnabled = true
-//        photoSetting.
+        //       photoSetting.flashMode = .auto
+        //       photoSetting.isAutoVirtualDeviceFusionEnabled = true
+        //        photoSetting.
     }
     
     /// init
-
+    
     
     private func beginSession()  {
-        captureSession.sessionPreset = .photo
+        captureSession.sessionPreset = .vga640x480
         
         if let availableDevice = AVCaptureDevice.DiscoverySession(deviceTypes: [.builtInWideAngleCamera], mediaType: AVMediaType.video, position: .back).devices.first {
             capturepDevice = availableDevice
@@ -85,6 +85,8 @@ class AVfViewModel : NSObject, AVCaptureVideoDataOutputSampleBufferDelegate,Obse
         }
         
         let previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
+        previewLayer.videoGravity = AVLayerVideoGravity.resizeAspectFill
+        previewLayer.masksToBounds = true
         self.previewLayer = previewLayer
         
         let dataOutput = AVCaptureVideoDataOutput()
@@ -118,18 +120,62 @@ class AVfViewModel : NSObject, AVCaptureVideoDataOutputSampleBufferDelegate,Obse
         
         if _takePhoto {
             _takePhoto = false
-            if let image = getImageFromSampleBuffer(buffer: sampleBuffer) {
-                DispatchQueue.main.async {
-                    self.image = image
-                    self.processText(image: image)
+            let visionImage = VisionImage(buffer: sampleBuffer)
+            visionImage.orientation =  imageOrientation(deviceOrientation:.portrait, cameraPosition: .back)
+            
+            let textRecoganizer = TextRecognizer.textRecognizer()
+        
+     
+            textRecoganizer.process(visionImage) { (result, error) in
                 
-                    
+                guard error == nil, let result = result else {
+                    print("[ERROR]: " + error.debugDescription)
+                    return
                 }
-               
                 
-               
-            }
+                
+                let option = TranslatorOptions(sourceLanguage: .english, targetLanguage: .japanese)
+                self.englishJapaneseTranslator = Translator.translator(options: option)
+                
+                self.englishJapaneseTranslator?.translate(result.text, completion: { (translated, error) in
+                    
+                    guard error == nil, let translated = translated else {
+                        print("[ERROR]: " + error.debugDescription)
+                        return
+                    }
+                    
+                    DispatchQueue.main.async {
+                        self.translated = translated
+                        print(translated)
+                    }
+                    
+                    
+                    
+                })
+            
+            
+            
+            
+            
         }
+        }
+       
+       
+        
+        //        if _takePhoto {
+        //            _takePhoto = false
+        //            if let image = getImageFromSampleBuffer(buffer: sampleBuffer) {
+        //                DispatchQueue.main.async {
+        //                    self.image = image
+        //                    self.processText(image: image)
+        //
+        //
+        //                }
+        //
+        //
+        //
+        //            }
+        //        }
     }
     
     private func getImageFromSampleBuffer (buffer: CMSampleBuffer) -> UIImage? {

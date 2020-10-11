@@ -42,7 +42,7 @@ struct CircularTabView: View {
         
             
         }
-        .edgesIgnoringSafeArea(.bottom)
+        .edgesIgnoringSafeArea(.all)
     }
 }
 

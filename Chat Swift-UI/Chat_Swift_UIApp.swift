@@ -19,6 +19,7 @@ struct Chat_Swift_UIApp: App {
         WindowGroup {
             
             ContentView().environmentObject(userInfo)
+            
     
         }
         
@@ -26,6 +27,9 @@ struct Chat_Swift_UIApp: App {
 }
 
 class AppDelegate: NSObject, UIApplicationDelegate {
+    
+    static var orientationLock = UIInterfaceOrientationMask.portrait
+
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         

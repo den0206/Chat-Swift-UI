@@ -10,95 +10,77 @@ import SwiftUI
 struct AVView: View {
     
     @ObservedObject private var vm = AVfViewModel()
-    
+   
     var body: some View {
-        VStack {
-            /// no photo
-            if vm.image == nil {
-               
-                ZStack(alignment: .bottom) {
-                    /// Z1
-                    if vm.previewLayer != nil  {
-                        CAlayerView(caLayer: vm.previewLayer)
-
-                    }
-                    
-                    Spacer()
-                    /// Z2
-                    Button(action: {
-                        self.vm.takePhoto()
-                    }) {
-                        Image(systemName: "camera.circle.fill")
-                            .renderingMode(.original)
-                            .resizable()
-                            .frame(width: 80, height: 80, alignment: .center)
-                    }
-                    .padding(.bottom,30)
-                }
-                .onAppear {
-                    self.vm.startSession()
-                }
-                .onDisappear{
-                    self.vm.endSession()
-                }
-            } else {
-                /// exist photo
-                ZStack(alignment: .topLeading) {
-                    /// Z1
-                    VStack {
-                        
-                        Spacer()
-                        
-                        if vm.translated != nil {
-                            Image(uiImage: vm.image!)
-                                .resizable()
-                                .scaledToFill()
-                                .aspectRatio(contentMode: .fit)
-                                .overlay(
-                                    
-                                    Rectangle()
-                                        .fill(Color.green)
-                                        .position(<#T##position: CGPoint##CGPoint#>)
-                                    
-//                                        Text(vm.translated!)
-//                                            .foregroundColor(.white)
-//                                            .background(Color.green)
-//                                            .position(x: vm.tframe!.minX, y: vm.tframe!.maxY)
-                               
-                                )
-                            
-                        } else {
-                            Image(uiImage: vm.image!)
-                                .resizable()
-                                .scaledToFill()
-                                .aspectRatio(contentMode: .fit)
-                              
+       
+            ZStack(alignment: .bottom) {
+                /// Z1
+                if vm.previewLayer != nil  {
+                    CAlayerView(caLayer: vm.previewLayer)
+                        .onTapGesture {
+                            self.vm.image = nil
+                            self.vm.translated = nil
                         }
-                    
-                        Spacer()
-                    }
-                    
-                    
-                    
-                    /// Z2
-                    Button(action: {
-                        self.vm.image = nil
-                        self.vm.translated = nil
-                    }) {
-                        Image(systemName: "xmark.circle.fill")
-                            .renderingMode(.original)
-                            .resizable()
-                            .frame(width: 30, height: 30, alignment: .center)
-                            .foregroundColor(.white)
-                            .background(Color.gray)
-                    }
-                    .frame(width: 80, height: 80, alignment: .center)
+                        
+               
                 }
+                
+                if vm.translated != nil {
+                    
+                    GeometryReader { geo in
+                        
+                        Text(vm.translated!)
+                            .foregroundColor(.white)
+                            .background(Color.green)
+                            .position(x: geo.size.width / 2, y: geo.size.height / 4)
+                    }
+                    
+                        
+                }
+                
+                Spacer()
+                /// Z2
+                Button(action: {
+                    self.vm.takePhoto()
+                }) {
+                    Image(systemName: "camera.circle.fill")
+                        .renderingMode(.original)
+                        .resizable()
+                        .frame(width: 80, height: 80, alignment: .center)
+                }
+                .padding(.bottom,30)
+                Spacer()
             }
-        }
-        .alert(isPresented: $vm.showAlert, content: {
-            vm.alert
-        })
+            .edgesIgnoringSafeArea(.all)
+            .onAppear {
+//                DispatchQueue.main.async {
+//                    AppDelegate.orientationLock = UIInterfaceOrientationMask.landscapeRight
+//                    UIDevice.current.setValue(UIInterfaceOrientation.landscapeRight.rawValue, forKey: "orientation")
+//
+//                    UINavigationController.attemptRotationToDeviceOrientation()
+//
+//
+//                }
+
+                self.vm.startSession()
+            }
+            .onDisappear{
+                
+//                DispatchQueue.main.async {
+//
+//                    AppDelegate.orientationLock = UIInterfaceOrientationMask.portrait
+//
+//                    UIDevice.current.setValue(UIInterfaceOrientation.portrait.rawValue, forKey: "orientation")
+//
+//                    UINavigationController.attemptRotationToDeviceOrientation()
+//
+//                }
+                self.vm.endSession()
+            }
+            .alert(isPresented: $vm.showAlert, content: {
+                vm.alert
+            })
+        
     }
 }
 
