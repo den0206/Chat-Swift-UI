@@ -163,29 +163,9 @@ class AVfViewModel : NSObject, AVCaptureVideoDataOutputSampleBufferDelegate,Obse
                     })
                     
                 }
-                
-                
-                
-                
+ 
             }
         }
-        
-        
-        
-        //        if _takePhoto {
-        //            _takePhoto = false
-        //            if let image = getImageFromSampleBuffer(buffer: sampleBuffer) {
-        //                DispatchQueue.main.async {
-        //                    self.image = image
-        //                    self.processText(image: image)
-        //
-        //
-        //                }
-        //
-        //
-        //
-        //            }
-        //        }
     }
     
     private func getImageFromSampleBuffer (buffer: CMSampleBuffer) -> UIImage? {
@@ -203,56 +183,6 @@ class AVfViewModel : NSObject, AVCaptureVideoDataOutputSampleBufferDelegate,Obse
         return nil
     }
     
-    func processText(image : UIImage) {
-        let visionImage = VisionImage(image: image)
-        visionImage.orientation = image.imageOrientation
-        let textRecoganizer = TextRecognizer.textRecognizer()
-        
-        textRecoganizer.process(visionImage) { [self] (result, error) in
-            guard error == nil, let result = result else {
-                print("[ERROR]: " + error.debugDescription)
-                return
-            }
-            
-            let imageSize = image.size
-            let aspectRatio = imageSize.width / imageSize.height
-            let previewFrame = CGRect(x: self.previewLayer.frame.origin.x, y: self.previewLayer.frame.origin.y, width: self.previewLayer.frame.width * aspectRatio, height: self.previewLayer.frame.height)
-            print(previewFrame)
-            let xOffSet = (self.previewLayer.frame.width - previewFrame.width) * 0.5
-            let widthRate = previewFrame.width / imageSize.height;
-            let heightRate = previewFrame.height / imageSize.width;
-            
-            for block in result.blocks {
-                
-                let blockText = block.text
-                let frame = block.frame
-               
-                if frame.width < 100 || frame.height < 100 {
-                    continue
-                }
-                
-                let option = TranslatorOptions(sourceLanguage: .english, targetLanguage: .japanese)
-                self.englishJapaneseTranslator = Translator.translator(options: option)
-                
-                self.englishJapaneseTranslator?.translate(blockText, completion: { (translated, error) in
-                    
-                    guard error == nil, let translated = translated else {
-                        print("[ERROR]: " + error.debugDescription)
-                        return
-                    }
-                    
-//                    self.translated = translated
-                    self.tframe = frame
-                    
-//                    self.tframe =  CGRect(x: xOffSet + frame.origin.x * widthRate, y: frame.origin.y * heightRate, width: frame.width * widthRate, height: frame.height * heightRate)
-                    print(tframe)
-                    
-                    
-                })
-            }
-            
-        }
-    }
     
     /// translator
     

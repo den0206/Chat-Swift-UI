@@ -23,6 +23,7 @@ class Recent : Identifiable {
     var lastMessage : String
     var counter : Int
     var date : String
+    var isSwiped : Bool = false
     
     var offSet : CGFloat = 0
     

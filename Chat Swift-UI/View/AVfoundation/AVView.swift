@@ -73,10 +73,6 @@ struct AVView: View {
                             .padding()
                             .background(Color.red)
                             .clipShape(Circle())
-//                        Image(systemName: "camera.circle.fill")
-//                            .renderingMode(.original)
-//                            .resizable()
-//                            .frame(width: 80, height: 80, alignment: .center)
                     }
                     .padding()
                     

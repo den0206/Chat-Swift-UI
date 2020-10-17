@@ -59,7 +59,7 @@ struct CircularTab : View {
             
             Spacer(minLength: 15)
             
-            tabButton(function: {index = 1}, systemImageName: "magnifyingglass", title: "Search", number: 1, index: index)
+            tabButton(function: {index = 1}, systemImageName: "magnifyingglass", title: "Scan", number: 1, index: index)
             
             Spacer(minLength: 15)
             
